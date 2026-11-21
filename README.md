@@ -1,88 +1,110 @@
-SkinSense – AI-Based Skin Analysis System
+# **SkinSense – AI-Based Skin Analysis System**
 
 SkinSense is an AI-powered web application designed to support preliminary skin condition analysis through image classification. It provides personalized skincare recommendations and connects users with dermatologists through an online consultation platform.
 
-Features
+## **Features**
 
-- AI-Based Skin Analysis: Analyzes uploaded skin images using a deep learning image classification model.
-- Personalized Skincare Recommendations: Suggests skincare products based on the analysis results.
-- Doctor Consultation: Allows users to connect with doctors through appointment booking and video consultations.
-- User Management: Supports user registration, login, and profile management.
-- Doctor Management: Provides features for doctors to manage their profiles and appointments.
-- Admin Dashboard: Allows administrators to manage users, doctors, products, and complaints.
+- **AI-Based Skin Analysis:** Analyzes uploaded skin images using a deep learning image classification model.
+- **Personalized Skincare Recommendations:** Suggests skincare products based on the analysis results.
+- **Doctor Consultation:** Allows users to connect with doctors through appointment booking and video consultations.
+- **User Management:** Supports user registration, login, and profile management.
+- **Doctor Management:** Provides features for doctors to manage their profiles and appointments.
+- **Admin Dashboard:** Allows administrators to manage users, doctors, products, and complaints.
 
-AI Model
+## **AI Model**
 
-SkinSense uses a fine-tuned DINOv2-base Vision Transformer (ViT) model for skin condition image classification.
+SkinSense uses a fine-tuned **DINOv2-base Vision Transformer (ViT)** model for skin condition image classification.
 
-The model integration uses Hugging Face Transformers for image processing and classification.
+The model integration uses **Hugging Face Transformers** for image processing and classification.
 
-Technologies Used
+## **Technologies Used**
 
-Category| Technologies
-Programming Language| Python
-Backend Framework| Django
-Frontend| HTML, CSS, JavaScript
-Database| SQLite3
-Deep Learning| Vision Transformer (ViT), DINOv2
-AI Framework| Hugging Face Transformers
+| **Category** | **Technologies** |
+|:---|:---|
+| Programming Language | Python |
+| Backend Framework | Django |
+| Frontend | HTML, CSS, JavaScript |
+| Database | SQLite3 |
+| Deep Learning | Vision Transformer (ViT), DINOv2 |
+| AI Framework | Hugging Face Transformers |
 
-System Modules
+## **System Modules**
 
-1. User Module – Upload skin images, view analysis results, explore skincare recommendations, and book doctor appointments.
-2. Doctor Module – Manage doctor profiles and handle consultation appointments.
-3. Admin Module – Manage users, doctors, products, and complaints.
+1. **User Module**
+   - Upload skin images.
+   - View skin analysis results.
+   - Explore personalized skincare recommendations.
+   - Book doctor appointments.
 
-Installation and Setup
+2. **Doctor Module**
+   - Manage doctor profiles.
+   - Handle consultation appointments.
 
-1. Clone the repository
+3. **Admin Module**
+   - Manage users and doctors.
+   - Manage skincare products.
+   - Handle complaints.
 
+## **Installation and Setup**
+
+### **1. Clone the Repository**
+
+```bash
 git clone https://github.com/Adithyakrishna-rs/SkinSense-AI-Skin-Analysis.git
+```
 
-2. Navigate to the project directory
+### **2. Navigate to the Project Directory**
 
+```bash
 cd SkinSense-AI-Skin-Analysis
+```
 
-3. Install dependencies
+### **3. Install Dependencies**
 
+```bash
 pip install -r requirements.txt
+```
 
-4. Configure environment variables
+### **4. Configure Environment Variables**
 
 Configure the required environment variables for Django, email services, and API integrations.
 
-Never upload passwords, API keys, or secret keys to GitHub.
+**Important:** Never upload passwords, API keys, or secret keys to GitHub.
 
-5. Apply database migrations
+### **5. Apply Database Migrations**
 
+```bash
 python manage.py migrate
+```
 
-6. Start the development server
+### **6. Start the Development Server**
 
+```bash
 python manage.py runserver
+```
 
 Open the following address in your browser:
 
-"http://127.0.0.1:8000/"
+**http://127.0.0.1:8000/**
 
-Project Purpose
+## **Project Purpose**
 
 The main objective of SkinSense is to combine artificial intelligence with web-based healthcare services to make preliminary skin condition analysis and dermatology consultations more accessible.
 
-Future Enhancements
+## **Future Enhancements**
 
 - Development of a mobile application.
 - Improved AI model accuracy and classification capabilities.
 - Additional skin condition categories.
 - Enhanced telemedicine features.
 
-Project Information
+## **Project Information**
 
-Project Name: SkinSense – AI-Based Skin Analysis System
-Project Type: Academic Major Project
-Framework: Django
-AI Model: DINOv2-base Vision Transformer
+- **Project Name:** SkinSense – AI-Based Skin Analysis System
+- **Project Type:** Academic Major Project
+- **Framework:** Django
+- **AI Model:** DINOv2-base Vision Transformer
 
 ---
 
-Note: SkinSense is intended for preliminary analysis and educational purposes. It does not replace professional medical diagnosis or consultation.
+**Note:** SkinSense is intended for preliminary analysis and educational purposes. It does not replace professional medical diagnosis or consultation.
