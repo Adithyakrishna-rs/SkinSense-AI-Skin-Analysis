@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+
+# Django database
+db.sqlite3
+
+# AI cache
+hf_cache/
+
+# Private configuration
+.env
+
+# Uploaded files and generated files
+media/
+staticfiles/
+
+#dataset
+Dataset/

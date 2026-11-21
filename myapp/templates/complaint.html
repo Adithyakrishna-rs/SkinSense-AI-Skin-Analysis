@@ -1,0 +1,132 @@
+{% extends 'userheader.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --skin-gold: #c48b46;
+        --skin-cream: #fdfbf9;
+        --skin-dark: #333333;
+    }
+
+    body {
+        background-color: var(--skin-cream);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .brand-font {
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 2px;
+    }
+
+    .complaint-card {
+        background: #ffffff;
+        padding: 40px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        border: 1px solid #f2e9e1;
+        margin-top: 20px;
+    }
+
+    .form-label-gold {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        color: var(--skin-gold);
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-luxury {
+        border: 1px solid #eee;
+        background-color: #fafafa;
+        border-radius: 0;
+        padding: 15px;
+        transition: 0.3s;
+        font-size: 0.9rem;
+    }
+
+    .form-control-luxury:focus {
+        outline: none;
+        border-color: var(--skin-gold);
+        background-color: #fff;
+        box-shadow: 0 0 8px rgba(196, 139, 70, 0.1);
+        color: var(--skin-dark);
+    }
+
+    .btn-luxury {
+        background-color: var(--skin-gold);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: 0.4s;
+        border-radius: 0;
+    }
+
+    .btn-luxury:hover {
+        background-color: #a3733a;
+        letter-spacing: 3px;
+        color: white;
+    }
+
+    /* Section Heading Style */
+    .section-title::after {
+        content: "";
+        width: 50px;
+        height: 2px;
+        background: var(--skin-gold);
+        display: block;
+        margin: 15px auto;
+    }
+</style>
+
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="text-uppercase fw-bold mb-2" style="color: var(--skin-gold); letter-spacing: 3px; font-size: 0.85rem;">Support Center</p>
+            <h1 class="brand-font display-5 mb-4 section-title">Submit Complaint</h1>
+        </div>
+
+        <div class="row g-5 justify-content-center">
+            <div class="col-lg-7 wow fadeIn" data-wow-delay="0.2s">
+                <div class="complaint-card">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="complaint" class="form-label-gold">Detail Your Concern</label>
+                                    <textarea 
+                                        class="form-control form-control-luxury" 
+                                        id="complaint" 
+                                        name="complaint" 
+                                        rows="6" 
+                                        placeholder="Please describe the issue you are experiencing..."
+                                        style="resize: vertical;"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 text-center mt-4">
+                                <button class="btn btn-luxury" type="submit">Submit Complaint</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p class="small text-muted">
+                        Our team typically responds within 24-48 business hours. 
+                        <br>
+                        <a href="/viewcomplaint" style="color: var(--skin-gold); text-decoration: none;">View your complaint status here.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

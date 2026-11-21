@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Secure Checkout | SkinSense</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Changed Teal to Gold */
+            --gold: #c48b46;
+            --gold-lt: #fdf8f3;
+            --gold-mid: #a37336;
+            
+            /* Kept Ink and Dark tones */
+            --ink: #0f1b18;
+            --ink-muted: #4a5e59;
+            --border: rgba(196, 139, 70, 0.2); /* Tinted gold border */
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        body {
+            background: linear-gradient(rgba(250, 248, 245, 0.8), rgba(250, 248, 245, 0.8)), 
+                        url("{% static 'user/img/bg1.jpeg' %}"); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'DM Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--ink);
+        }
+
+        .payment-wrapper {
+            padding: 4rem 15px;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .brand-title {
+            font-family: 'Fraunces', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-title em {
+            font-style: italic;
+            color: var(--gold); /* Gold Accent */
+        }
+
+        .subtitle {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
+        .payment-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 3rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(196, 139, 70, 0.08);
+        }
+
+        .method-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2.5rem;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .method-icon {
+            height: 20px;
+            filter: grayscale(1);
+            opacity: 0.4;
+            transition: 0.3s;
+        }
+
+        .method-icon.active {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        .field-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold); /* Label color to Gold */
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-seamless {
+            border: none;
+            border-bottom: 1.5px solid var(--border);
+            border-radius: 0;
+            padding: 10px 0;
+            width: 100%;
+            font-size: 14px;
+            margin-bottom: 2rem;
+            transition: 0.3s;
+            background: transparent;
+            color: var(--ink);
+        }
+
+        .input-seamless:focus {
+            outline: none;
+            border-bottom: 1.5px solid var(--gold); /* Focus color to Gold */
+        }
+
+        .input-seamless::placeholder {
+            color: #ccc;
+            font-size: 13px;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 25px;
+        }
+
+        .flex-row > div {
+            flex: 1;
+        }
+
+        /* Kept Black/Ink Button per your request */
+        .btn-pay {
+            background-color: var(--ink);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-pay:hover {
+            background-color: var(--gold); /* Hover remains Gold for interaction */
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(196, 139, 70, 0.2);
+        }
+
+        .secure-notice {
+            text-align: center;
+            font-size: 10px;
+            color: var(--ink-muted);
+            margin-top: 2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+            font-size: 10px;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .steps span.active { color: var(--gold); } /* Step color to Gold */
+    </style>
+</head>
+<body>
+
+    <div class="payment-wrapper">
+        <div class="header-section">
+            <div class="steps">
+                <span>01 Doctor</span>
+                <span>•</span>
+                <span>02 Schedule</span>
+                <span>•</span>
+                <span class="active">03 Checkout</span>
+            </div>
+            <h1 class="brand-title">Secure <em>Checkout</em></h1>
+            <p class="subtitle">SkinSense Dermatology Services</p>
+        </div>
+
+        <div class="payment-card">
+            <div class="method-selector">
+                <span class="field-label" style="margin-right: auto; color: #aaa;">Payment Method</span>
+                <img src="{% static 'user/img/visa.png' %}" class="method-icon active" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="method-icon active" alt="Mastercard">
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                
+                <label class="field-label">Cardholder Name</label>
+                <input type="text" name="name" class="input-seamless" placeholder="As shown on card" required>
+
+                <label class="field-label">Card Number</label>
+                <input type="text" name="card_number" class="input-seamless" maxlength="16" placeholder="•••• •••• •••• ••••" required>
+
+                <div class="flex-row">
+                    <div>
+                        <label class="field-label">Expiry Date</label>
+                        <input type="text" name="expiry_date" class="input-seamless" placeholder="MM / YY" required>
+                    </div>
+                    <div>
+                        <label class="field-label">CVV Code</label>
+                        <input type="password" name="cvv" class="input-seamless" maxlength="3" placeholder="•••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-pay">
+                    Complete Consultation Payment
+                </button>
+            </form>
+
+            <div class="secure-notice">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:5px; color: var(--gold);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                SSL Encrypted Secure Transaction
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

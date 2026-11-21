@@ -1,0 +1,205 @@
+{% extends 'userheader.html' %}
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    /* --- REFINED FEEDBACK THEME --- */
+    .edit-feedback-wrapper {
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 60px 50px;
+        background: #ffffff;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.03);
+        border: 1px solid #f2e9e1;
+        position: relative;
+    }
+
+    .section-eyebrow {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #c48b46; /* SkinSense Gold */
+        margin-bottom: 12px;
+        display: block;
+        text-align: center;
+    }
+
+    .brand-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 40px;
+        color: #1a1a1a;
+    }
+
+    .brand-title em {
+        font-style: italic;
+        color: #c48b46;
+        font-weight: 400;
+    }
+
+    /* --- FORM STYLING --- */
+    .label-skin {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #c48b46;
+        margin-bottom: 15px;
+    }
+
+    .form-control-skin {
+        border: none !important;
+        border-bottom: 1px solid #e0d5c5 !important;
+        border-radius: 0 !important;
+        padding: 15px 0 !important;
+        font-size: 15px;
+        background: transparent !important;
+        transition: 0.4s ease;
+        resize: none;
+    }
+
+    .form-control-skin:focus {
+        box-shadow: none !important;
+        border-bottom: 1px solid #1a1a1a !important;
+    }
+
+    /* --- STAR RATING --- */
+    #edit-star-rating {
+        font-size: 24px;
+        color: #e0d5c5;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #edit-star-rating i {
+        margin: 0 5px;
+        transition: transform 0.2s ease, color 0.3s ease;
+    }
+
+    #edit-star-rating i.fas {
+        color: #c48b46; /* Active Gold */
+    }
+
+    #edit-star-rating i:hover {
+        transform: scale(1.2);
+    }
+
+    /* --- BUTTONS --- */
+    .btn-update-skin {
+        background-color: #1a1a1a;
+        color: #fff !important;
+        padding: 18px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+        border: none;
+        transition: 0.4s;
+        box-shadow: 10px 10px 0px #c48b46;
+        margin-top: 20px;
+    }
+
+    .btn-update-skin:hover {
+        background-color: #c48b46;
+        box-shadow: 10px 10px 0px #1a1a1a;
+        transform: translate(-3px, -3px);
+    }
+
+    .btn-cancel-skin {
+        display: block;
+        text-align: center;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #999;
+        text-decoration: none;
+        margin-top: 25px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-cancel-skin:hover {
+        color: #1a1a1a;
+    }
+</style>
+
+<div class="container">
+    <div class="edit-feedback-wrapper animate__animated animate__fadeIn">
+        <span class="section-eyebrow">Your Voice Matters</span>
+        <h2 class="brand-title">Refine Your <em>Experience</em></h2>
+        
+        <form method="POST" id="editFeedbackForm">
+            {% csrf_token %}
+            
+            <div class="mb-5">
+                <label class="label-skin">Your Revised Thoughts</label>
+                <textarea name="feedback" class="form-control form-control-skin" rows="4" required placeholder="Share the details of your journey...">{{ form.instance.feedback }}</textarea>
+            </div>
+
+            <div class="mb-5 text-center">
+                <label class="label-skin d-block">Updated Rating</label>
+                <div id="edit-star-rating" class="mb-3">
+                    <i class="far fa-star" data-value="1"></i>
+                    <i class="far fa-star" data-value="2"></i>
+                    <i class="far fa-star" data-value="3"></i>
+                    <i class="far fa-star" data-value="4"></i>
+                    <i class="far fa-star" data-value="5"></i>
+                </div>
+                <input type="hidden" name="rating" id="edit-rating-value" value="{{ form.instance.rating }}">
+                <p style="font-size: 12px; font-family: 'Playfair Display', serif; font-style: italic; color: #999;">Select the stars to adjust your score</p>
+            </div>
+
+            <button type="submit" class="btn btn-update-skin w-100">Save Changes</button>
+            <a href="{% url 'userappoint' %}" class="btn btn-cancel-skin">Discard Changes & Return</a>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('#edit-star-rating i');
+    const ratingInput = document.getElementById('edit-rating-value');
+    const initialValue = parseInt(ratingInput.value) || 0;
+
+    function updateStars(val) {
+        stars.forEach(s => {
+            const starVal = parseInt(s.getAttribute('data-value'));
+            if (starVal <= val) {
+                s.classList.replace('far', 'fas');
+                s.style.color = "#c48b46";
+            } else {
+                s.classList.replace('fas', 'far');
+                s.style.color = "#e0d5c5";
+            }
+        });
+    }
+
+    // Initialize state
+    updateStars(initialValue);
+
+    // Click events
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const selectedVal = this.getAttribute('data-value');
+            ratingInput.value = selectedVal;
+            updateStars(selectedVal);
+        });
+
+        // Hover feedback
+        star.addEventListener('mouseover', function() {
+            updateStars(this.getAttribute('data-value'));
+        });
+    });
+
+    // Reset to last saved value on mouse leave
+    document.getElementById('edit-star-rating').addEventListener('mouseleave', function() {
+        updateStars(ratingInput.value);
+    });
+});
+</script>
+
+{% endblock %}

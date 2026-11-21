@@ -1,0 +1,154 @@
+{% extends 'userheader.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --skin-gold: #c48b46;
+        --skin-cream: #fdfbf9;
+        --skin-dark: #333333;
+    }
+
+    /* Page Background */
+    body { 
+        background-color: var(--skin-cream); 
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Hero Section */
+    .edit-header {
+        background: #ffffff;
+        padding: 60px 0;
+        text-align: center;
+        border-bottom: 1px solid #f2e9e1;
+        margin-bottom: 40px;
+    }
+
+    .edit-header h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        color: var(--skin-dark);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    /* Form Card Container */
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto 80px auto;
+        background: #ffffff;
+        padding: 50px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+        border: 1px solid #f2e9e1;
+        border-radius: 8px;
+    }
+
+    /* Styling the Django Form Labels and Inputs */
+    .form-container p {
+        margin-bottom: 25px;
+    }
+
+    .form-container label {
+        display: block;
+        font-weight: 600;
+        color: var(--skin-gold);
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+    }
+
+    .form-container input, 
+    .form-container select, 
+    .form-container textarea {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.1rem;
+        border: 1px solid #ddd;
+        border-radius: 0; /* Keep it sharp and modern */
+        background-color: #fafafa;
+        transition: border-color 0.3s;
+    }
+
+    .form-container input:focus {
+        border-color: var(--skin-gold);
+        outline: none;
+        background-color: #fff;
+    }
+
+    /* Action Buttons */
+    .btn-group-custom {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-update {
+        flex: 2;
+        background-color: var(--skin-gold);
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-update:hover {
+        background-color: #a6763a;
+    }
+
+    .btn-cancel {
+        flex: 1;
+        background-color: transparent;
+        color: #888;
+        border: 1px solid #ccc;
+        padding: 15px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+
+    .btn-cancel:hover {
+        background-color: #333;
+        color: #fff;
+        border-color: #333;
+    }
+
+    /* Help text or errors */
+    .helptext, .errorlist {
+        font-size: 0.85rem;
+        color: #d9534f;
+        list-style: none;
+        padding: 0;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="edit-header">
+    <h3>Edit Your Appointment</h3>
+    <div style="width: 60px; height: 3px; background: var(--skin-gold); margin: 20px auto 0;"></div>
+</div>
+
+<div class="container">
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="appointment-fields">
+                {{ users.as_p }}
+                {{ form.as_p }}
+            </div>
+
+            <div class="btn-group-custom">
+                <input type="submit" value="Update Appointment" class="btn-update">
+                <input type="reset" value="Reset" class="btn-cancel">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

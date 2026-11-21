@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Find Specialists | SkinSense</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="{% static 'user/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'user/css/style.css' %}" rel="stylesheet">
+
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-cream: #fdfbf9;
+            --skin-dark: #333333;
+        }
+
+        body { 
+            background-color: var(--skin-cream); 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 1.1rem; /* Increased base font size */
+        }
+
+        .brand-font { font-family: 'Playfair Display', serif; }
+
+        /* Navigation Styles */
+        .nav-link {
+            font-size: 0.85rem !important;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Search Header Section */
+        .doctor-search-header {
+            background: #ffffff;
+            padding: 40px;
+            border-bottom: 1px solid #f2e9e1;
+            margin-bottom: 30px;
+        }
+
+        /* Table Container Styling */
+        .table-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            margin: 20px 50px 80px 50px;
+            border: 1px solid #f2e9e1;
+        }
+
+        .skin-care-table thead th {
+            background-color: #fafafa;
+            color: var(--skin-gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            padding: 20px 15px;
+            border-bottom: 3px solid var(--skin-cream);
+        }
+
+        .skin-care-table td {
+            padding: 25px 15px;
+            vertical-align: middle;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        /* Team Card Styling */
+        .team-item {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.5s;
+        }
+        .team-item:hover { transform: translateY(-10px); }
+
+        /* Buttons */
+        .btn-appointment {
+            background-color: var(--skin-gold);
+            color: white !important;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn-appointment:hover {
+            background-color: var(--skin-dark);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .spec-badge {
+            background: rgba(196, 139, 70, 0.1);
+            color: var(--skin-gold);
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        #myInput {
+            border-radius: 0;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-search-submit {
+            background: var(--skin-dark);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid px-0 d-none d-lg-block" style="background-color: #fdf8f5; border-bottom: 1px solid #eee;">
+        <div class="row gx-0 align-items-center">
+            <div class="col-lg-4 text-start py-2 ps-5">
+                <small class="text-muted"><i class="bi bi-envelope-paper me-2"></i> hello@skinsense.com</small>
+                <small class="text-muted ms-4"><i class="bi bi-telephone me-2"></i> +91 8596780304</small>
+            </div>
+            <div class="col-lg-4 text-center py-3">
+                <a href="index.html" class="navbar-brand m-0">
+                    <h1 class="m-0 display-5 fw-light tracking-widest text-dark" style="letter-spacing: 4px; font-family: 'Playfair Display', serif;">
+                        SKIN<span style="color: #d4a373 !important;">SENSE</span>
+                    </h1>
+                </a>
+            </div>
+            <div class="col-lg-4 text-end py-2 pe-5">
+                <a class="btn btn-sm btn-outline-secondary border-0" href="#"><i class="bi bi-instagram"></i></a>
+                <a class="btn btn-sm btn-outline-secondary border-0" href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+        </div>
+    </div>
+
+   <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top shadow-sm py-lg-0 px-4 px-lg-5">
+    <a href="index.html" class="navbar-brand d-block d-lg-none">
+        <h1 class="m-0 text-dark" style="letter-spacing: 2px;">SKIN SENSE</h1>
+    </a>
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
+        <div class="navbar-nav py-3 py-lg-0">
+                <a href="{% url 'user' %}" class="nav-item nav-link active px-3 text-uppercase">Home</a>
+                               
+                 <a href="/profileuser" class="nav-item nav-link px-3 text-uppercase">Profile</a>
+
+
+                 <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle px-3 text-uppercase" data-bs-toggle="dropdown">Services</a>
+                    <div class="dropdown-menu m-0 rounded-0">
+                        <a href="{% url 'predict_skin_disease'%}" class="dropdown-item">Predict Disease</a>
+                        <a href="{% url 'recommended_products' %}" class="dropdown-item">Recommended Products</a>
+                        <a href="{% url 'personalized_products' %}" class="dropdown-item">Personalized Products</a>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle px-3 text-uppercase" data-bs-toggle="dropdown">Support</a>
+                    <div class="dropdown-menu m-0 rounded-0">
+                        <a href="/complaint" class="dropdown-item">Add Complaint</a>
+                        <a href="/viewcomplaint" class="dropdown-item">View Status</a>
+                    </div>
+                </div>
+                <a href="#contact" class="nav-item nav-link px-3 text-uppercase">Contact</a>
+                <a href="/logout" class="nav-item nav-link px-3 text-uppercase text-danger">Logout</a>
+            </div>
+       
+    </div>
+</nav>
+
+    <form method="GET">
+        {% csrf_token %}
+       
+        <div class="container-fluid team py-5">
+            <div class="container">
+                <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <h1 class="display-6 brand-font mb-5">Meet Our Featured Doctors</h1>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item bg-light">
+                            <div class="overflow-hidden">
+                                <img class="img-fluid" src="{% static 'user/img/team-1.jpg' %}" alt="">
+                            </div>
+                            <div class="team-text text-center p-4">
+                                <h4 class="brand-font">Dr. James Cam</h4>
+                                <span class="text-uppercase small fw-bold text-primary">Dermatologist</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="team-item bg-light">
+                            <div class="overflow-hidden">
+                                <img class="img-fluid" src="{% static 'user/img/team-2.jpg' %}" alt="">
+                            </div>
+                            <div class="team-text text-center p-4">
+                                <h4 class="brand-font">Dr. Sreya Nair</h4>
+                                <span class="text-uppercase small fw-bold text-primary">Dermatologist</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="team-item bg-light">
+                            <div class="overflow-hidden">
+                                <img class="img-fluid" src="{% static 'user/img/team-3.jpg' %}" alt="">
+                            </div>
+                            <div class="team-text text-center p-4">
+                                <h4 class="brand-font">Dr. Caroline Forbes</h4>
+                                <span class="text-uppercase small fw-bold text-primary">Dermatologist</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="team-item bg-light">
+                            <div class="overflow-hidden">
+                                <img class="img-fluid" src="{% static 'user/img/team-4.jpg' %}" alt="">
+                            </div>
+                            <div class="team-text text-center p-4">
+                                <h4 class="brand-font">Dr. Amal Farouk</h4>
+                                <span class="text-uppercase small fw-bold text-primary">Dermatologist</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+            <h2 class="brand-font">Patient Experiences</h2>
+            <p class="text-muted">What our community says about our care</p>
+        </div>
+        <div class="row g-4">
+        {% for f in feedback_list %}
+<div class="col-lg-4 col-md-6">
+    <div class="testimonial-card">
+        <i class="fa fa-quote-left quote-icon mb-3"></i>
+        <p class="small text-muted mb-4">"{{ f.feedback }}"</p>
+        
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+            <div>
+                <h6 class="mb-0 fw-bold">{{ f.login_id.name }}</h6>
+                <small class="text-gold">Reviewing Dr. {{ f.doctor_id.name }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+        </div>
+    </div>
+</div>
+<div class="container-fluid doctor-search-header wow fadeIn" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-5">
+                <h2 class="brand-font mb-0"> Search Our Specialists</h2>
+            </div>
+            <div class="col-md-7 d-flex gap-2">
+                <input type="text" id="myInput" name="search" class="form-control" 
+                       placeholder="Search by name, hospital or specialty..." 
+                       value="{{ request.GET.search|default:'' }}">
+                
+                <button type="submit" class="btn btn-search-submit">
+                    <i class="bi bi-search me-1"></i> Search
+                </button>
+
+                <a href="{% url 'docsearch' %}" class="btn btn-outline-secondary d-flex align-items-center px-3" 
+                   style="border-radius: 0; border: 1px solid #ddd; color: #666; text-transform: uppercase; font-size: 0.85rem; font-weight: 600;">
+                    <i class="bi bi-x-lg me-1"></i> Clear
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div class="table-container">
+            <h4 class="brand-font mb-4" style="color: var(--skin-gold);">Registry of Specialists</h4>
+            <table class="table skin-care-table">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Details</th>
+                        <th>Qualification</th>
+                        <th>Specialization</th>
+                        <th>Hospital</th>
+                        <th>Experience</th>
+                        <th>Consultation Fees</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in doc %}
+                    <tr>
+                        <td>
+                            <strong class="brand-font" style="font-size: 1.2rem;">{{a.name}}</strong><br>
+                            <small class="text-muted text-uppercase fw-bold">{{a.gender}}</small>
+                        </td>
+                        <td>{{a.age}} yrs</td>
+                        <td class="fw-bold">{{a.qualification}}</td>
+                        <td><span class="spec-badge">{{a.specialization}}</span></td>
+                        <td class="text-dark">{{a.hospital|title}}</td>
+                        <td>{{a.experience}} Years</td>
+                        <td>{{a.consultation_fee}}</td>
+                        <td class="text-center">
+                            <a href="{% url 'appointment' a.id %}" class="btn-appointment">Take Appointment</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+
+     <div class="container-fluid py-4 wow fadeIn" data-wow-delay="0.1s" style="background-color: #ddbd9d; border-top: 1px solid #eee; margin-top: 4rem;">
+    <div class="container py-4">
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6">
+                <h3 class="mb-3 text-uppercase" style="color: #c48b46; letter-spacing: 2px; font-weight: 400; font-size: 1.5rem;">
+                    SkinSense
+                </h3>
+                <p class="mb-3 small" style="color: #666; line-height: 1.6;">
+                    SkinSense is a premium dermatology clinic offering advanced treatments with personalized care.
+                </p>
+                <div class="d-flex">
+                    <a class="btn btn-sm btn-square me-2" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm btn-square me-2" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-sm btn-square me-0" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Contact Info</h5>
+                <p class="mb-2 small" style="color: #666;"><i class="fa fa-map-marker-alt me-2" style="color: #c48b46;"></i>Main Road, City, India</p>
+                <p class="mb-2 small" style="color: #666;"><i class="fa fa-phone-alt me-2" style="color: #c48b46;"></i>+91 8596780304</p>
+                <p class="mb-0 small" style="color: #666;"><i class="fa fa-envelope me-2" style="color: #c48b46;"></i>skinsense@gmail.com</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Quick Links</h5>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="/register" style="color: #666;">Registration</a>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="/login2" style="color: #666;">Login</a>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="#" style="color: #666;">Our Story</a>
+                <a class="btn btn-link text-decoration-none mb-0 p-0 d-block small" href="#" style="color: #666;">Privacy Policy</a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Newsletter</h5>
+                <div class="position-relative w-100">
+                    <input class="form-control w-100 py-2 ps-3 pe-5 small" type="email" placeholder="Your email" style="background: #fff; border-color: #ddd; font-size: 0.85rem;">
+                    <button type="button" class="btn btn-sm py-1 position-absolute top-0 end-0 mt-1 me-1 text-white" style="background-color: #c48b46;">
+                        Join
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid py-3" style="background: #f8f8f8; border-top: 1px solid #eee;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0" style="color: #999; font-size: 0.75rem;">
+                    &copy; 2026 <a href="#" class="text-decoration-none" style="color: #c48b46;">SkinSense</a>. All Rights Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end" style="color: #999; font-size: 0.75rem;">
+                    Excellence in Dermatological Care
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    
+</body>
+</html>

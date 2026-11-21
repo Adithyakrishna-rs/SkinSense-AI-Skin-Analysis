@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Patient Feedbacks | SkinSense Admin</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="{% static 'admin/assets/img/kaiadmin/favicon.ico' %}" type="image/x-icon" />
+
+    <script src="{% static 'admin/assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700", "Playfair Display:400,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["{% static 'admin/assets/css/fonts.min.css' %}"],
+        },
+        active: function () { sessionStorage.fonts = true; },
+      });
+    </script>
+
+    <link rel="stylesheet" href="{% static 'admin/assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/assets/css/kaiadmin.min.css' %}" />
+
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-dark: #1a2035;
+            --skin-teal: #2c5f5d;
+        }
+
+        .logo-header .logo h1 {
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .sidebar .nav > .nav-item.active > a {
+            background: var(--skin-gold) !important;
+        }
+
+        .card-header {
+            background-color: var(--skin-dark);
+            color: white !important;
+            border-bottom: 3px solid var(--skin-gold);
+        }
+        
+        .card-title { color: white !important; font-family: 'Playfair Display', serif; }
+
+        .thead-gold th {
+            color: var(--skin-gold) !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .star-rating { color: #ffc107; font-size: 0.8rem; }
+        
+        .feedback-bubble {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 12px;
+            border-left: 4px solid var(--skin-teal);
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .date-badge {
+            font-size: 0.75rem;
+            color: #888;
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-dark: #1a2035;
+        }
+        .logo-header .logo h1 { color: #ffffff; font-family: 'Playfair Display', serif; letter-spacing: 2px; font-size: 1.3rem; margin: 0; text-transform: uppercase; }
+        .sidebar .nav > .nav-item.active > a { background: var(--skin-gold) !important; }
+        .card-round { border-radius: 10px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .numbers .card-category { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: #8d94ad; }
+        .btn-gold { background-color: var(--skin-gold) !important; color: white !important; border-radius: 5px; padding: 5px 15px; font-size: 12px; border: none; }
+        .progress-sm { height: 6px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar" data-background-color="dark">
+            <div class="sidebar-logo">
+                <div class="logo-header" data-background-color="dark">
+                    <a href="/adminhome/" class="logo"><h1>SKIN<span style="color: var(--skin-gold);">SENSE</span></h1></a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item active">
+                            <a href="/adminhome/"><i class="fas fa-chart-line"></i><p>Dashboard Overview</p></a>
+                        </li>
+                        <li class="nav-section"><h4 class="text-section">Management</h4></li>
+                        <li class="nav-item"><a href="/doctorlist/"><i class="fas fa-user-md"></i><p>Doctor Registry</p></a></li>
+                        <li class="nav-item"><a href="/datatables/"><i class="fas fa-procedures"></i><p>Patient Database</p></a></li>
+                        <li class="nav-item"><a href="/admincomplaint/"><i class="fas fa-exclamation-circle"></i><p>Grievances</p></a></li>
+                        <li class="nav-item"><a href="/adminfeedback/"><i class="fas fa-star"></i><p>Patient Feedbacks</p></a></li>
+                        <li class="nav-item mt-5"><a href="/login2" class="bg-danger text-white"><i class="fas fa-power-off"></i><p>Logout System</p></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            <div class="main-header">
+                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                    <div class="container-fluid">
+                        <div class="navbar-left p-0 d-none d-lg-flex">
+                            <h4 class="m-0 text-dark fw-bold">Experience Reviews</h4>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="container">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-round">
+                                <div class="card-header">
+                                    <h4 class="card-title">Patient Testimonials</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="feedback-table" class="display table table-hover">
+                                            <thead class="thead-gold">
+                                                <tr>
+                                                    <th style="width: 25%">Patient Info</th>
+                                                    <th style="width: 55%">Feedback Content</th>
+                                                    <th style="width: 20%" class="text-center">Submission Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for f in feedbacks %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-bold text-dark">{{ f.login_id.patient.name }}</div>
+                                                        <div class="star-rating">
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="feedback-bubble">
+                                                            "{{ f.feedback }}"
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="badge bg-light text-muted border">
+                                                            {{ f.date|default:"Recent" }}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                {% empty %}
+                                                <tr>
+                                                    <td colspan="3" class="text-center py-5 text-muted">No patient feedbacks recorded yet.</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="container-fluid d-flex justify-content-center">
+                    <div class="copyright">SkinSense Quality Management &copy; 2026</div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="{% static 'admin/assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/plugin/datatables/datatables.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/kaiadmin.min.js' %}"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#feedback-table").DataTable({
+            "pageLength": 10,
+            "order": [[2, "desc"]]
+        });
+      });
+    </script>
+</body>
+</html>

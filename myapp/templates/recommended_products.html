@@ -1,0 +1,247 @@
+{% extends 'userheader.html' %}
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+/* 1. Global Background Setup */
+body { 
+    
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+.rp-page {
+    padding: 60px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 2. Header Styling - Matching Update Profile */
+.rp-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+.rp-eyebrow {
+    color: #c48b46;
+    letter-spacing: 3px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+}
+.rp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+.rp-title em {
+    font-style: normal;
+    color: #d4a373;
+}
+.rp-sub {
+    font-size: 0.95rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+.header-line {
+    width: 60px;
+    height: 3px;
+    background-color: #c48b46;
+    margin: 20px auto 0;
+}
+
+/* 3. Disease Section & Glass Cards */
+.disease-section {
+    margin-bottom: 70px;
+}
+
+.disease-label {
+    margin-bottom: 25px;
+}
+.disease-tag {
+    display: inline-block;
+    background: #333;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Glassmorphism Tips Card */
+.tips-card {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+.tips-icon {
+    width: 45px; height: 45px;
+    background: #c48b46;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.tips-icon svg { stroke: #fff; width: 20px; height: 20px; fill: none; }
+
+.tips-label {
+    color: #c48b46;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.tips-text { color: #444; font-size: 0.9rem; line-height: 1.7; }
+
+/* 4. Product Grid & Cards */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.prod-card {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.prod-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 15px 35px rgba(196, 139, 70, 0.15);
+}
+
+.prod-img-wrap {
+    background: #fafafa;
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+}
+.prod-img-wrap img { max-height: 80%; width: auto; }
+
+.prod-body { padding: 20px; flex-grow: 1; }
+.prod-source { font-size: 0.7rem; color: #c48b46; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+.prod-title { font-size: 1rem; color: #333; font-weight: 600; line-height: 1.4; }
+.prod-price { color: #333; font-weight: 700; margin-top: 10px; }
+
+/* 5. Buttons - Matching Save Changes Style */
+.prod-btn {
+    display: block;
+    margin: 0 20px 20px;
+    padding: 12px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: 0.3s;
+}
+.prod-btn:hover { background: #c48b46; color: #fff; }
+
+/* Empty State */
+.rp-empty {
+    text-align: center;
+    padding: 100px 20px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    max-width: 600px;
+    margin: 50px auto;
+}
+</style>
+
+<div class="rp-page">
+    <div class="rp-header">
+        <span class="rp-eyebrow">Personalized Care</span>
+        <h1 class="rp-title">Recommended <em>Products</em></h1>
+        <p class="rp-sub">Curated clinical products and expert skincare tips based on your diagnostic history.</p>
+        <div class="header-line"></div>
+    </div>
+
+    {% if recommendations %}
+        {% for group in recommendations %}
+        <div class="disease-section">
+            <div class="disease-label">
+                <span class="disease-tag">{{ group.disease }}</span>
+            </div>
+
+            {% if group.tips %}
+            <div class="tips-card">
+                <div class="tips-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </div>
+                <div class="tips-content">
+                    <div class="tips-label">Clinical Insight</div>
+                    <p class="tips-text">{{ group.tips }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="products-grid">
+                {% if group.products %}
+                    {% for prod in group.products %}
+                    <div class="prod-card">
+                        <div class="prod-img-wrap">
+                            {% if prod.image %}
+                                <img src="{{ prod.image }}" alt="{{ prod.title }}">
+                            {% else %}
+                                <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
+                            {% endif %}
+                        </div>
+                        <div class="prod-body">
+                            {% if prod.source %}<div class="prod-source">{{ prod.source }}</div>{% endif %}
+                            <div class="prod-title">{{ prod.title|truncatechars:60 }}</div>
+                            {% if prod.price %}<div class="prod-price">{{ prod.price }}</div>{% endif %}
+                        </div>
+                        {% if prod.link %}
+                            <a href="{{ prod.link }}" target="_blank" class="prod-btn">View Details</a>
+                        {% else %}
+                            <span class="prod-btn" style="background: #ccc; cursor: not-allowed;">Restocking</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="w-100 p-4 text-center text-muted border rounded" style="background: rgba(255,255,255,0.4)">
+                        No products listed for this condition yet.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="rp-empty">
+            <i class="bi bi-clipboard2-pulse" style="font-size: 3rem; color: #c48b46;"></i>
+            <h3 class="mt-4" style="font-family: 'Playfair Display', serif;">No Diagnoses Found</h3>
+            <p class="text-muted">Personalized product recommendations will appear here once your consultant records a diagnosis for your appointments.</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

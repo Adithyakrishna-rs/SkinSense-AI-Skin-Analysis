@@ -1,0 +1,424 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <title>SkinSense | Luxury Dermatology</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Elegant Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background: url("{% static 'login2/images/docimg.jpg' %}") no-repeat center center/cover;
+            position:relative;
+        }
+
+        /* Soft Beige Overlay */
+        body::before{
+            content:"";
+            position:absolute;
+            width:100%;
+            height:100%;
+            background: linear-gradient(rgba(245,230,215,0.8), rgba(230,210,185,0.85));
+            backdrop-filter: blur(0 px);
+        }
+
+        .login-card{
+            position:relative;
+            width:400px;
+            padding:45px;
+            border-radius:25px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(15px);
+            border:1px solid rgba(255,255,255,0.5);
+            box-shadow:0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .logo{
+            text-align:center;
+            font-size:35px;
+            margin-bottom:10px;
+        }
+
+        h2{
+            font-family:'Playfair Display',serif;
+            text-align:center;
+            color:#8c6b3f;
+            margin-bottom:5px;
+            letter-spacing:1px;
+        }
+
+        .subtitle{
+            text-align:center;
+            font-size:13px;
+            color:#6e5335;
+            margin-bottom:30px;
+        }
+
+        .form-group{
+            margin-bottom:20px;
+        }
+
+        .form-control{
+            width:100%;
+            padding:12px 15px;
+            border-radius:12px;
+            border:1px solid #e0c9a6;
+            outline:none;
+            font-size:14px;
+            background:rgba(255,255,255,0.8);
+        }
+
+        .form-control:focus{
+            border-color:#c5a05a;
+            box-shadow:0 0 8px rgba(197,160,90,0.4);
+        }
+
+        .btn-login{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:30px;
+            background: linear-gradient(45deg,#3d3417,#3b3015);
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s ease;
+            margin-top:10px;
+        }
+
+        .btn-login:hover{
+            transform:scale(1.05);
+            box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .extra-links{
+            text-align:center;
+            margin-top:20px;
+            font-size:13px;
+            color:#6e5335;
+        }
+
+        .extra-links a{
+            color:#a07c3b;
+            text-decoration:none;
+            font-weight:500;
+        }
+
+        .extra-links a:hover{
+            text-decoration:underline;
+        }
+
+        /* Decorative Gold Line */
+        .gold-line{
+            width:60px;
+            height:3px;
+            background:linear-gradient(to right,#54430a,#b8902e);
+            margin:10px auto 20px;
+            border-radius:10px;
+        }
+
+        /* Only move the eye icon inside password field */
+.input-wrapper{
+    position: relative;
+}
+
+.eye-icon-wrap{
+    position: absolute;
+    right: 12px;
+    top: 70%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+ .js-feedback {
+    font-size: 0.8rem;
+    color: red;
+    margin-top: 5px;
+}
+
+input:invalid {
+    border-color: red;
+}
+
+input:valid {
+    border-color: green;
+}
+
+    </style>
+</head>
+{% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+  
+<body>
+
+
+    
+<div class="login-card">
+
+    <div class="logo">🧴</div>
+
+    <h2>SkinSense Clinic</h2>
+    <div class="gold-line"></div>
+    <div class="subtitle">Luxury Dermatology & Advanced Skin Care</div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+       <div class="form-group input-wrapper">
+		<i class="fas fa-envelope"></i>
+    <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+    <small class="js-feedback"></small>
+</div>
+<div class="form-group input-wrapper">
+	<i class="fas fa-lock"></i>
+    <input type="password" name="password" id="password-field" class="form-control" placeholder="Password" required>
+    <i class="fa fa-eye eye-icon-wrap" id="togglePassword"></i>
+    <small class="js-feedback"></small>
+</div>
+
+        <button type="submit" class="btn-login">Sign In</button>
+    </form>
+
+   <div class="extra-links" style="line-height: 1.8;">
+    Don’t have an account? <br>
+    <a href="/register" class="fw-bold" style="color: #c48b46;">Patient Registration</a> | 
+    <a href="/docreg" class="fw-bold" style="color: #c48b46;">Doctor Registration</a>
+    <br>
+    <a href="{% url 'forgot_password' %}" class="text-muted small">Forgot Password?</a></div>
+</div>
+
+</div>
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordField = document.querySelector('#password-field');
+
+    togglePassword.addEventListener('click', function () {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    if (!form) return;
+
+    let submitted = false;
+    const touched = new Set(); // tracks fields the user interacted with
+
+    // Enable or disable the submit button based on validation
+    const submitButton = form.querySelector("button[type='submit']");
+
+    // Helper function to enable/disable the submit button
+    function toggleSubmitButton() {
+        const isFormValid = validateAll(true);
+        submitButton.disabled = !isFormValid; // Disable submit button if invalid
+    }
+
+    function getAllFields() {
+        return Array.from(form.querySelectorAll("input, select, textarea"))
+            .filter(el => el.name && el.type !== "hidden" && el.type !== "submit" && el.type !== "button");
+    }
+
+    // Ensure feedback element is available for each field
+    function ensureFeedbackEl(input) {
+        let fb = input.parentElement.querySelector(".js-feedback");
+        if (!fb) {
+            fb = document.createElement("small");
+            fb.className = "js-feedback";
+            fb.style.display = "block";
+            fb.style.marginTop = "4px";
+            input.parentElement.appendChild(fb);
+        }
+        return fb;
+    }
+
+    // Clear feedback
+    function clearFeedback(input) {
+        const fb = input.parentElement.querySelector(".js-feedback");
+        if (fb) fb.textContent = "";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Set invalid feedback
+    function setInvalid(input, msg) {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = "❌ " + msg;
+        fb.style.color = "red";
+        input.style.borderColor = "red";
+    }
+
+    // Set valid feedback
+    function setValid(input, msg = "") {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = msg ? ("✅ " + msg) : "";
+        fb.style.color = "green";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Validation rules for specific fields
+    const rules = {
+        
+        email: {
+            required: true,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            invalidMsg: "Enter a valid email address",
+            validMsg: "Valid email"
+        },
+        password: {
+            required: true,
+            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/,
+            invalidMsg: "Min 8 chars with uppercase, lowercase, number & special char",
+            validMsg: "Strong password"
+        }
+    };
+
+    // Check if a value is empty
+    function isEmptyValue(el) {
+        return (el.value || "").trim() === "";
+    }
+
+    // Validate a single field
+    function validateField(el, showMsg) {
+        const name = el.name;
+        let ok = true;
+
+        // Handle specific validations for name, contact, email, password
+        if (rules[name]) {
+            if (el.type === "radio" || el.type === "file" || el.tagName.toLowerCase() === "select") {
+                return true;
+            }
+
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (rules[name].pattern && !rules[name].pattern.test(el.value.trim())) {
+                ok = false;
+                if (showMsg) setInvalid(el, rules[name].invalidMsg);
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (showMsg) setValid(el, rules[name].validMsg);
+            else clearFeedback(el);
+        } else {
+            // For other fields, just check for required
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+            } else {
+                clearFeedback(el);
+            }
+        }
+
+        return ok;
+    }
+
+    // Validate radio buttons for gender
+    function validateRadioGroups(showMsg) {
+        const radios = Array.from(form.querySelectorAll('input[type="radio"][name]'));
+        const names = [...new Set(radios.map(r => r.name))];
+        let ok = true;
+
+        names.forEach(groupName => {
+            const checked = form.querySelector(`input[type="radio"][name="${groupName}"]:checked`);
+            const first = form.querySelector(`input[type="radio"][name="${groupName}"]`);
+            if (!first) return;
+
+            if (!checked) {
+                ok = false;
+                if (showMsg) setInvalid(first, "Please select an option");
+                else clearFeedback(first);
+            } else {
+                if (showMsg) setValid(first);
+                else clearFeedback(first);
+            }
+        });
+
+        return ok;
+    }
+
+    // Validate all fields
+    function validateAll(showMsg) {
+        let ok = true;
+
+        // Validate specific fields (name, contact, email, password)
+        const fields = getAllFields().filter(el => el.type !== "radio");
+        fields.forEach(el => {
+            const shouldShow = showMsg && (submitted || touched.has(el.name));
+            if (!validateField(el, shouldShow)) ok = false;
+        });
+
+        // Validate radio groups (gender)
+        if (!validateRadioGroups(showMsg)) ok = false;
+
+        return ok;
+    }
+
+    // Handle form submission
+    form.addEventListener("submit", (e) => {
+        submitted = true;
+        const ok = validateAll(true);
+        if (!ok) {
+            e.preventDefault();
+            alert("❌ Please fill all required fields correctly.");
+        }
+    });
+
+    // Real-time validation on input or blur
+    getAllFields().forEach(el => {
+        const evt = (el.type === "file" || el.tagName.toLowerCase() === "select") ? "change" : "input";
+
+        el.addEventListener(evt, () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+
+        el.addEventListener("blur", () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Real-time validation for radio buttons
+    form.querySelectorAll('input[type="radio"]').forEach(r => {
+        r.addEventListener("change", () => {
+            touched.add("radio");
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Initially disable the submit button until the form is valid
+    toggleSubmitButton();
+});
+</script>
+
+
+</body>
+</html>

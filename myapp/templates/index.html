@@ -1,0 +1,532 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SKINSENSE</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'user/img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'user/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'user/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'user/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'user/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'user/css/style.css' %}" rel="stylesheet">
+
+    
+</head>
+
+<body>
+    <!-- Spinner Start -->
+
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center" style="z-index: 9999;">
+    <div class="d-flex flex-column align-items-center">
+        <div class="position-relative d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+            <div class="position-absolute w-100 h-100 rounded-circle border border-2 animate-pulse" 
+                 style="border-color: rgba(196, 139, 70, 0.2) !important; animation: pulse-ring 2s infinite;"></div>
+            
+            <div class="fw-bold fs-4" style="color: #c48b46; font-family: 'Playfair Display', serif; letter-spacing: 2px;">
+                S<span style="opacity: 0.5;">S</span>
+            </div>
+        </div>
+        
+        <p class="mt-3 text-uppercase fw-light" style="color: #8d94ad; letter-spacing: 5px; font-size: 0.7rem;">
+            Preparing your experience
+        </p>
+    </div>
+</div>
+
+<style>
+    @keyframes pulse-ring {
+        0% { transform: scale(0.6); opacity: 1; }
+        100% { transform: scale(1.2); opacity: 0; }
+    }
+    
+    /* Ensure the spinner fades out smoothly via your JS */
+    #spinner.show {
+        transition: opacity 0.5s ease-out, visibility 0s;
+    }
+</style>
+    <!-- Spinner End -->
+
+
+  <div class="container-fluid px-0 d-none d-lg-block" style="background-color: #fdf8f5; border-bottom: 1px solid #eee;">
+    <div class="row gx-0 align-items-center">
+        <div class="col-lg-4 text-start py-2 ps-5">
+            <small class="text-muted"><i class="bi bi-envelope-paper me-2"></i> hello@skinsense.com</small>
+            <small class="text-muted ms-4"><i class="bi bi-telephone me-2"></i> +91 8596780304</small>
+        </div>
+        
+        <div class="col-lg-4 text-center py-3">
+            <a href="index.html" class="navbar-brand m-0">
+                <h1 class="m-0 display-5 fw-light tracking-widest text-dark" style="letter-spacing: 4px; font-family: 'Playfair Display', serif;">
+                    SKIN<span class="text-primary" style="color: #d4a373 !important;">SENSE</span>
+                </h1>
+            </a>
+        </div>
+
+        <div class="col-lg-4 text-end py-2 pe-5">
+            <a class="btn btn-sm btn-outline-secondary border-0" href="#"><i class="bi bi-instagram"></i></a>
+            <a class="btn btn-sm btn-outline-secondary border-0" href="#"><i class="bi bi-facebook"></i></a>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top shadow-sm py-lg-0 px-4 px-lg-5">
+    <a href="index.html" class="navbar-brand d-block d-lg-none">
+        <h1 class="m-0 text-dark" style="letter-spacing: 2px;">SKIN SENSE</h1>
+    </a>
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
+        <div class="navbar-nav py-3 py-lg-0">
+            <a href="{% url 'index' %}" class="nav-item nav-link active px-4 text-uppercase small fw-bold">Home</a>
+            <a href="#about-section" class="nav-item nav-link px-4 text-uppercase small fw-bold">Our Story</a>
+            
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle px-4 text-uppercase small fw-bold" data-bs-toggle="dropdown">Join Us</a>
+                <div class="dropdown-menu rounded-0 shadow-sm border-0 m-0">
+                    <a href="/docreg" class="dropdown-item">Dermatologist Registration</a>
+                    <a href="/register" class="dropdown-item">Patient Registration</a>
+                </div>
+            </div>
+            
+            <a href="/login2" class="nav-item nav-link px-4 text-uppercase small fw-bold">Login</a>
+        </div>
+    </div>
+</nav>
+
+
+ <div class="container-fluid p-0 mb-5 hero-header" 
+     style="background: #fdfbf9; min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; font-family: 'Poppins', sans-serif;">
+
+    <div style="position: absolute; top: 0; right: 0; width: 60%; height: 100%; 
+                background: url('{% static 'user/img/mainlayout.jpg' %}') center center no-repeat; 
+                background-size: cover; z-index: 1;
+                clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);">
+        <div style="width: 100%; height: 100%; background: linear-gradient(to right, #fdfbf9 0%, transparent 40%);"></div>
+    </div>
+
+    <div style="position: absolute; left: 5%; top: 20%; bottom: 20%; width: 1px; background: rgba(196, 139, 70, 0.3); z-index: 2;"></div>
+
+    <div class="container" style="position: relative; z-index: 3;">
+        <div class="row">
+            <div class="col-lg-7">
+                
+                <div style="display: inline-flex; align-items: center; background: #fff; padding: 10px 20px; border: 1px solid #c48b46; margin-bottom: 35px; box-shadow: 10px 10px 0px rgba(196, 139, 70, 0.1);">
+                    <span style="color: #c48b46; text-transform: uppercase; letter-spacing: 4px; font-size: 0.65rem; font-weight: 800;">
+                        Advanced AI Dermatology
+                    </span>
+                </div>
+
+                <h1 style="font-family: 'Playfair Display', serif; color: #1a1a1a; font-size: calc(3.5rem + 3vw); line-height: 0.95; font-weight: 600; margin-bottom: 25px; letter-spacing: -3px;">
+                    Define Your <br>
+                    <span style="color: #c48b46; font-style: italic; position: relative;">
+                        Attraction.
+                        <span style="position: absolute; bottom: 10px; left: 0; width: 100%; height: 8px; background: rgba(196, 139, 70, 0.1); z-index: -1;"></span>
+                    </span>
+                </h1>
+
+                <p style="color: #444; font-size: 1.1rem; font-weight: 300; line-height: 2; max-items: 450px; margin-bottom: 50px; padding-left: 15px; border-left: 3px solid #c48b46;">
+                    SkinSense isn't just a tool; it's a transformation. Our clinical AI decodes your unique profile to curate a future of permanent radiance.
+                </p>
+
+                <div style="display: flex; align-items: center; gap: 40px;">
+                    <a href="/login2/" 
+                       style="background: #1a1a1a; color: #fff; padding: 25px 55px; text-decoration: none; font-size: 0.75rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; transition: 0.4s; border: none; position: relative; overflow: hidden;">
+                       Start Journey Now
+                    </a>
+                    
+                    <div style="display: flex; flex-direction: column;">
+                        <span style="font-family: 'Playfair Display', serif; font-style: italic; color: #c48b46; font-size: 1.2rem;">99.4% Accuracy</span>
+                        <span style="color: #999; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;">Vetted by Dermatologists</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="position: absolute; bottom: 5%; left: 5%; transform: rotate(-90deg); transform-origin: left bottom;">
+        <span style="color: #c48b46; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 5px; font-weight: 700;">Scroll to Explore</span>
+    </div>
+</div>   
+    <!-- Video Modal Start -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 16:9 aspect ratio -->
+                    <div class="ratio ratio-16x9">
+                        <iframe class="embed-responsive-item" src="" id="video" allowfullscreen
+                            allowscriptaccess="always" allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Video Modal End -->
+
+
+  <!-- About Start -->
+<div id="about-section" class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="position-relative overflow-hidden h-100" style="min-height: 450px;">
+                    <img class="position-absolute w-100 h-100"
+                         src="{% static 'user/img/aboutmain.jpg' %}"
+                         alt="SkinSense Clinic"
+                         style="object-fit: cover; border-radius: 8px;">
+
+                   
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="h-100">
+                    <p class="text-uppercase fw-bold mb-2" style="color: #c48b46; letter-spacing: 2px;">About Our Clinic</p>
+                    <h1 class="display-5 mb-4" style="color: #333;">Your Trusted Skin Care Experts</h1>
+
+                    <p class="fs-5 mb-4" style="color: #666; font-style: italic;">
+                        "At SkinSense, we combine advanced dermatology with personalized care
+                        to help you achieve healthy, radiant skin."
+                    </p>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 d-flex align-items-center justify-content-center border me-3"
+                                     style="width: 60px; height: 60px; color: #c48b46;">
+                                    <i class="fa fa-user-md fa-2x"></i>
+                                </div>
+                                <h5 class="mb-0" style="font-size: 1.1rem;">Certified Dermatologists</h5>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 d-flex align-items-center justify-content-center border me-3"
+                                     style="width: 60px; height: 60px; color: #c48b46;">
+                                    <i class="fa fa-spa fa-2x"></i>
+                                </div>
+                                <h5 class="mb-0" style="font-size: 1.1rem;">Advanced Treatments</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="mb-4 text-muted">
+                        From acne management and anti-aging solutions to advanced aesthetic
+                        procedures, SkinSense is dedicated to delivering safe, effective,
+                        and science-backed skin care treatments tailored to your needs.
+                    </p>
+
+                   
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+<!-- Facts Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-md-12 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-uppercase fw-bold mb-2" style="color: #c48b46; letter-spacing: 2px;">Impact</p>
+                <h1 class="display-6 mb-4 mb-lg-0" style="color: #333;">Key <br>Highlights</h1>
+            </div>
+
+            <div class="col-md-4 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="bg-white border-bottom border-4 h-100 p-4 shadow-sm" style="border-color: #c48b46 !important;">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-shrink-0 d-flex align-items-center justify-content-center bg-light" 
+                             style="width: 50px; height: 50px; border-radius: 50%; color: #c48b46;">
+                            <i class="fa fa-search-plus fa-lg"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h2 class="mb-0" style="color: #333; font-weight: 700;" data-toggle="counter-up">100</h2>
+                            <span style="color: #c48b46; font-weight: bold;">+</span>
+                        </div>
+                    </div>
+                    <span class="text-muted text-uppercase small fw-bold" style="letter-spacing: 1px;">AI-Based Analyses</span>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3 wow fadeInUp" data-wow-delay="0.5s">
+    <div class="bg-white border-bottom border-4 h-100 p-4 shadow-sm" style="border-color: #c48b46 !important;">
+        <div class="d-flex align-items-center mb-3">
+            <div class="flex-shrink-0 d-flex align-items-center justify-content-center bg-light" 
+                 style="width: 50px; height: 50px; border-radius: 50%; color: #c48b46;">
+                <i class="fa fa-user-md fa-lg"></i>
+            </div>
+            <div class="ms-3">
+                <h2 class="mb-0" style="color: #333; font-weight: 700;" data-toggle="counter-up">{{ doctor_count }}</h2>
+                <span style="color: #c48b46; font-weight: bold;">+</span>
+            </div>
+        </div>
+        <span class="text-muted text-uppercase small fw-bold" style="letter-spacing: 1px;">Expert Doctors</span>
+    </div>
+</div>
+
+<div class="col-md-4 col-lg-3 wow fadeInUp" data-wow-delay="0.7s">
+    <div class="bg-white border-bottom border-4 h-100 p-4 shadow-sm" style="border-color: #c48b46 !important;">
+        <div class="d-flex align-items-center mb-3">
+            <div class="flex-shrink-0 d-flex align-items-center justify-content-center bg-light" 
+                 style="width: 50px; height: 50px; border-radius: 50%; color: #c48b46;">
+                <i class="fa fa-heart fa-lg"></i>
+            </div>
+            <div class="ms-3">
+                <h2 class="mb-0" style="color: #333; font-weight: 700;" data-toggle="counter-up">{{ patient_count }}</h2>
+                <span style="color: #c48b46; font-weight: bold;">+</span>
+            </div>
+        </div>
+        <span class="text-muted text-uppercase small fw-bold" style="letter-spacing: 1px;">Happy Clients</span>
+    </div>
+</div>
+<!-- Facts End -->
+
+<!-- services -->
+
+     <div id="services" class="container-xxl py-5" style="background: linear-gradient(180deg, #ffffff 0%, #fdfbf9 100%); color: #333333; padding: 100px 0;">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 700px; padding-bottom: 40px;">
+            <span style="color: #c48b46; text-transform: uppercase; letter-spacing: 5px; font-size: 0.75rem; font-weight: 700; display: block; margin-bottom: 15px;">Our Expertise</span>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #2c2c2c; font-weight: 400; margin-bottom: 20px;">Bespoke <span style="font-style: italic; color: #c48b46;">Skincare</span> Solutions</h2>
+            <div style="width: 60px; height: 1px; background-color: #c48b46; margin: 20px auto;"></div>
+            <p style="font-family: 'Poppins', sans-serif; font-weight: 300; color: #666; font-size: 0.95rem; line-height: 1.8;">Bridging the gap between advanced dermatology and artificial intelligence for a personalized clinical experience.</p>
+        </div>
+        
+        <div class="row g-5 text-center">
+            <div class="col-lg-4 col-md-6">
+                <div style="background: #ffffff; padding: 50px 30px; border: 1px solid rgba(196, 139, 70, 0.1); border-radius: 4px; box-shadow: 0 15px 45px rgba(0,0,0,0.03); transition: transform 0.3s ease;">
+                    <div style="width: 80px; height: 80px; line-height: 80px; border-radius: 50%; background: #fdfbf9; border: 1px solid rgba(196, 139, 70, 0.2); margin: 0 auto 30px auto; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa fa-robot" style="color: #c48b46; font-size: 1.8rem;"></i>
+                    </div>
+                    <h5 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; letter-spacing: 1px; color: #2c2c2c; margin-bottom: 15px;">AI Analysis</h5>
+                    <div style="width: 30px; height: 1px; background: #c48b46; margin: 0 auto 20px auto; opacity: 0.5;"></div>
+                    <p style="font-family: 'Poppins', sans-serif; color: #777; font-size: 0.85rem; line-height: 1.8; font-weight: 300;">Instant dermatological screening utilizing high-precision computer vision for accurate skin profiling.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div style="background: #ffffff; padding: 50px 30px; border: 1px solid rgba(196, 139, 70, 0.1); border-radius: 4px; box-shadow: 0 15px 45px rgba(0,0,0,0.03);">
+                    <div style="width: 80px; height: 80px; line-height: 80px; border-radius: 50%; background: #fdfbf9; border: 1px solid rgba(196, 139, 70, 0.2); margin: 0 auto 30px auto; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa fa-flask" style="color: #c48b46; font-size: 1.8rem;"></i>
+                    </div>
+                    <h5 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; letter-spacing: 1px; color: #2c2c2c; margin-bottom: 15px;">Regime Curation</h5>
+                    <div style="width: 30px; height: 1px; background: #c48b46; margin: 0 auto 20px auto; opacity: 0.5;"></div>
+                    <p style="font-family: 'Poppins', sans-serif; color: #777; font-size: 0.85rem; line-height: 1.8; font-weight: 300;">Scientifically formulated clinical regimes tailored specifically to your unique molecular skin type.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div style="background: #ffffff; padding: 50px 30px; border: 1px solid rgba(196, 139, 70, 0.1); border-radius: 4px; box-shadow: 0 15px 45px rgba(0,0,0,0.03);">
+                    <div style="width: 80px; height: 80px; line-height: 80px; border-radius: 50%; background: #fdfbf9; border: 1px solid rgba(196, 139, 70, 0.2); margin: 0 auto 30px auto; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa fa-video" style="color: #c48b46; font-size: 1.8rem;"></i>
+                    </div>
+                    <h5 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; letter-spacing: 1px; color: #2c2c2c; margin-bottom: 15px;">Tele-Dermatology</h5>
+                    <div style="width: 30px; height: 1px; background: #c48b46; margin: 0 auto 20px auto; opacity: 0.5;"></div>
+                    <p style="font-family: 'Poppins', sans-serif; color: #777; font-size: 0.85rem; line-height: 1.8; font-weight: 300;">Seamless, virtual access to accredited dermatologists for expert consultation anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- services End -->
+
+   
+
+<!-- feedback Start -->
+<div class="container-xxl py-5 bg-white">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-uppercase fw-bold mb-2" style="color: #c48b46; letter-spacing: 2px;">Patient Voice</p>
+                <h1 class="display-5 mb-4" style="font-family: 'Playfair Display', serif;">Why Patients Trust <br>SkinSense</h1>
+                <p class="mb-4 text-muted" style="line-height: 1.8;">We believe every skin story is unique. Our dermatologists combine medical expertise with aesthetic artistry to deliver results you can see and feel.</p>
+                
+                <div class="bg-gold-light p-4 rounded-3 d-inline-block" style="background-color: #fdfbf9; border-left: 3px solid #c48b46;">
+                    <h2 class="fw-bold mb-0 text-dark">4.9/5</h2>
+                    <p class="mb-0 text-muted small">Verified Average Rating</p>
+                </div>
+            </div>
+
+            <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="owl-carousel testimonial-carousel">
+                    {% for f in feedback_list %}
+                    <div class="testimonial-item bg-transparent px-3">
+                        <i class="fa fa-quote-left fa-2x mb-3" style="color: #c48b46; opacity: 0.15;"></i>
+                        <p class="fs-5 italic mb-4" style="color: #555; line-height: 1.7;">"{{ f.feedback }}"</p>
+                        <div class="d-flex align-items-center border-top pt-3">
+                            <img class="img-fluid rounded-circle p-1" src="{% static 'user/img/testimonial-1.jpg' %}" style="width: 45px; height: 45px; border: 1px solid #c48b46;">
+                            <div class="ps-3">
+                                <h6 class="mb-0 fw-bold">{{ f.login_id.patient.name }}</h6>
+                                <small class="text-uppercase" style="color: #c48b46; font-size: 0.7rem; letter-spacing: 1px;">Verified Patient</small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- feedback End -->
+ </div>
+</div>
+</div>
+</div>   
+
+   
+
+    <!-- Instagram Start -->
+    <div class="container-fluid position-relative instagram p-0 mt-5">
+       
+       <style>
+    /* This ensures all images in the row have the same dimensions */
+    .uniform-gallery img {
+        width: 100%;
+        height: 350px; /* Set your desired fixed height here */
+        object-fit: cover; /* This crops the image to fill the box without distortion */
+    }
+</style>
+    </div>
+
+<div class="row g-0 uniform-gallery">
+    <div class="col-4 col-md-2 wow fadeIn" data-wow-delay="0.1s">
+         <img src="{% static 'user/img/girlmain.jpg' %}" alt=""> 
+    </div>
+    <div class="col-4 col-md-2 wow fadeIn" data-wow-delay="0.2s">
+        <img src="{% static 'user/img/care.jpeg' %}" alt="">
+    </div>
+    <div class="col-4 col-md-2 wow fadeIn" data-wow-delay="0.3s">
+        <img src="{% static 'user/img/massage.jpeg' %}" alt="">
+    </div>
+    <div class="col-4 col-md-2 wow fadeIn" data-wow-delay="0.4s">
+        <img src="{% static 'user/img/hello.jpeg' %}" alt="">
+    </div>
+    <div class="col-4 col-md-2 wow fadeIn" data-wow-delay="0.5s">
+        <img src="{% static 'user/img/change.jpeg' %}" alt="">
+    </div>
+      <div class="col-4 col-md-2 wow fadeIn" data-wow-delay="0.6s">
+        <img src="{% static 'user/img/image6.jpg' %}" alt="">
+    </div>
+</div>
+    <!-- Instagram End -->
+
+    <!-- footer -->
+
+
+    <div class="container-fluid py-4 wow fadeIn" data-wow-delay="0.1s" style="background-color: #ddbd9d; border-top: 1px solid #eee; margin-top: 4rem;">
+    <div class="container py-4">
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6">
+                <h3 class="mb-3 text-uppercase" style="color: #c48b46; letter-spacing: 2px; font-weight: 400; font-size: 1.5rem;">
+                    SkinSense
+                </h3>
+                <p class="mb-3 small" style="color: #666; line-height: 1.6;">
+                    SkinSense is a premium dermatology clinic offering advanced treatments with personalized care.
+                </p>
+                <div class="d-flex">
+                    <a class="btn btn-sm btn-square me-2" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm btn-square me-2" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-sm btn-square me-0" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Contact Info</h5>
+                <p class="mb-2 small" style="color: #666;"><i class="fa fa-map-marker-alt me-2" style="color: #c48b46;"></i>Main Road, City, India</p>
+                <p class="mb-2 small" style="color: #666;"><i class="fa fa-phone-alt me-2" style="color: #c48b46;"></i>+91 8596780304</p>
+                <p class="mb-0 small" style="color: #666;"><i class="fa fa-envelope me-2" style="color: #c48b46;"></i>skinsense@gmail.com</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Quick Links</h5>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="/register" style="color: #666;">Registration</a>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="/login2" style="color: #666;">Login</a>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="#" style="color: #666;">Our Story</a>
+                <a class="btn btn-link text-decoration-none mb-0 p-0 d-block small" href="#" style="color: #666;">Privacy Policy</a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Newsletter</h5>
+                <div class="position-relative w-100">
+                    <input class="form-control w-100 py-2 ps-3 pe-5 small" type="email" placeholder="Your email" style="background: #fff; border-color: #ddd; font-size: 0.85rem;">
+                    <button type="button" class="btn btn-sm py-1 position-absolute top-0 end-0 mt-1 me-1 text-white" style="background-color: #c48b46;">
+                        Join
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <div class="container-fluid py-3" style="background: #f8f8f8; border-top: 1px solid #eee;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0" style="color: #999; font-size: 0.75rem;">
+                    &copy; 2026 <a href="#" class="text-decoration-none" style="color: #c48b46;">SkinSense</a>. All Rights Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end" style="color: #999; font-size: 0.75rem;">
+                    Excellence in Dermatological Care
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- footer End -->
+
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'user/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'user/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'user/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'user/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'user/lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'user/lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'user/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'user/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'user/js/main.js' %}"></script>
+</body>
+
+</html>

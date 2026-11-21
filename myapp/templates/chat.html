@@ -1,0 +1,383 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKINSENSE | Secure Consultation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-gold-soft: #dcb07a;
+            --skin-gold-light: #fdf8f5;
+            --skin-cream: #fdfbf9;
+            --skin-dark: #1a1a1a;
+            --sidebar-border: #f2e9e1;
+            --glass-white: rgba(255, 255, 255, 0.95);
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--skin-cream);
+            color: var(--skin-dark);
+            overflow: hidden;
+        }
+
+        .chat-app {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* --- Luxury Sidebar --- */
+        .sidebar {
+            width: 380px;
+            background-color: #fff;
+            border-right: 1px solid var(--sidebar-border);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 10px 0 40px rgba(0,0,0,0.03);
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 40px 30px 25px;
+            border-bottom: 1px solid var(--skin-gold-light);
+        }
+
+        .app-logo h2 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 4px;
+            color: var(--skin-dark);
+            font-size: 1.8rem;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* User Identity Card */
+        .identity-card {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff 0%, var(--skin-gold-light) 100%);
+            border: 1px solid var(--sidebar-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .identity-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--skin-dark);
+            color: var(--skin-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display';
+            font-size: 1.2rem;
+        }
+
+        .identity-info small {
+            text-transform: uppercase;
+            font-size: 9px;
+            color: var(--skin-gold);
+            letter-spacing: 2px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .identity-info span {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--skin-dark);
+        }
+
+        .users-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+
+        .list-label {
+            padding: 20px 30px 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #999;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .user-item {
+            padding: 15px 30px;
+            margin: 5px 15px;
+            border-radius: 10px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .user-item:hover {
+            background-color: var(--skin-gold-light);
+        }
+
+        .user-item.active {
+            background-color: var(--skin-gold-light);
+            border: 1px solid var(--skin-gold-soft);
+        }
+
+        /* --- Chat Main --- */
+        .chat-main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .chat-header {
+            padding: 25px 50px;
+            border-bottom: 1px solid var(--sidebar-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass-white);
+            backdrop-filter: blur(15px);
+            z-index: 5;
+        }
+
+        .currentChatName {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--skin-dark);
+        }
+
+        .chat-user-status {
+            color: var(--skin-gold);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* --- Luxury Body Area --- */
+        .chat-body {
+            flex-grow: 1;
+            padding: 40px 80px;
+            overflow-y: auto;
+            background-color: #fff;
+            background-image: radial-gradient(var(--skin-gold-light) 0.5px, transparent 0.5px);
+            background-size: 30px 30px; /* Subtle Grid */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 60%;
+            margin-bottom: 25px;
+            padding: 15px 22px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #fff 0%, var(--skin-gold-light) 100%);
+            color: var(--skin-dark);
+            border-radius: 20px 20px 2px 20px;
+            border: 1px solid var(--skin-gold-soft);
+            box-shadow: 5px 5px 20px rgba(196, 139, 70, 0.08);
+        }
+
+        .message.received {
+            align-self: flex-start;
+            background: var(--skin-dark);
+            color: #fff;
+            border-radius: 20px 20px 20px 2px;
+            box-shadow: 5px 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .message-time {
+            display: block;
+            font-size: 0.65rem;
+            margin-top: 8px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Premium Input Area --- */
+        .chat-input-area {
+            padding: 30px 80px 40px;
+            background: #fff;
+            border-top: 1px solid var(--sidebar-border);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--skin-cream);
+            border: 1px solid var(--skin-gold-soft);
+            border-radius: 40px;
+            padding: 5px 10px 5px 25px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--skin-gold);
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(196, 139, 70, 0.1);
+        }
+
+        .message-input {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            padding: 15px 0;
+            outline: none;
+            font-size: 0.95rem;
+            color: var(--skin-dark);
+        }
+
+        .send-btn {
+            background-color: var(--skin-dark);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-left: 10px;
+        }
+
+        .send-btn:hover {
+            background-color: var(--skin-gold);
+            transform: scale(1.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--skin-gold-soft); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="chat-app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="app-logo">
+                <h2>SkinSense</h2>
+                <p style="font-size: 0.65rem; letter-spacing: 4px; color: var(--skin-gold); margin: 8px 0 0; font-weight: 600;">CONCIERGE PORTAL</p>
+            </div>
+
+            <div class="identity-card">
+                <div class="identity-avatar">{{ other_name|slice:":1" }}</div>
+                <div class="identity-info">
+                    <small>Active Consultation</small>
+                    <span>{{ other_name }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="users-list">
+            <div class="list-label">Consultation Channel</div>
+            <div class="user-item active">
+                <div class="user-avatar" style="width: 40px; height: 40px; background: var(--skin-gold-light); color: var(--skin-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div style="font-size: 0.9rem; font-weight: 600;">Secure Thread</div>
+                    <div style="font-size: 0.7rem; color: #aaa;">Encrypted Connection</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding: 20px 30px; border-top: 1px solid var(--sidebar-border);">
+            <a href="{% url 'doctorhome' %}" style="text-decoration: none; color: var(--skin-gold); font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-arrow-left"></i> Exit to Dashboard
+            </a>
+        </div>
+    </aside>
+
+    <main class="chat-main">
+        <header class="chat-header">
+            <div>
+                <div class="chat-user-status"><span class="status-dot"></span> Secure Line</div>
+                <h3 class="currentChatName">{{ other_user.username }}</h3>
+            </div>
+            <div class="chat-actions">
+                <button title="Clinical Notes" style="background: white; border: 1px solid var(--sidebar-border); color: var(--skin-gold); width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s; margin-left: 15px;"><i class="fas fa-file-medical"></i></button>
+                <button title="End Session" style="background: white; border: 1px solid var(--sidebar-border); color: #e74c3c; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s; margin-left: 15px;"><i class="fas fa-times"></i></button>
+            </div>
+        </header>
+
+        <div class="chat-body" id="chatBody">
+            {% for msg in messages %}
+                <div class="message {% if msg.sender.id == current_user.id %}sent{% else %}received{% endif %}">
+                    <div class="message-content">{{ msg.message }}</div>
+                    <small class="message-time">{{ msg.timestamp|date:"P" }}</small>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="chat-input-area">
+            <form method="POST" action="{% url 'send_message' %}" style="margin: 0;">
+                {% csrf_token %}
+                <input type="hidden" name="receiver_id" value="{{ other_user.id }}">
+                <div class="input-wrapper">
+                    <input type="text" name="message" class="message-input" placeholder="Type your clinical response..." required autocomplete="off">
+                    <button type="submit" class="send-btn" title="Send Response">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+            <p style="text-align: center; font-size: 0.65rem; color: #ccc; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;">
+                <i class="fas fa-lock me-1"></i> End-to-end encrypted medical consultation
+            </p>
+        </div>
+    </main>
+</div>
+
+<script>
+    const chatBody = document.getElementById("chatBody");
+    chatBody.scrollTop = chatBody.scrollHeight;
+</script>
+
+</body>
+</html>

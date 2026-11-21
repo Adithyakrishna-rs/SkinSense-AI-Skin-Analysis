@@ -1,0 +1,316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkinSense AI | Diagnostics</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --skin-gold: #c48b46;
+      --skin-cream: #fdfbf9;
+      --skin-dark: #333333;
+      --glass-white: rgba(255, 255, 255, 0.95);
+      --bot-bubble: #ffffff;
+      --user-bubble: #c48b46;
+    }
+
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+  font-family: 'Poppins', sans-serif;
+  /* Add your image URL here */
+  background-image: linear-gradient(rgba(253, 251, 249, 0.8), rgba(253, 251, 249, 0.8)), 
+                    url("{% static 'user/img/bg1.jpeg' %}"); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+    #chatContainer {
+      width: 95%;
+      max-width: 480px;
+      height: 90vh;
+      background: var(--glass-white);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(196, 139, 70, 0.15);
+      border-radius: 4px; /* Clinical sharp edges */
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Luxury Branding Header */
+    .chat-header {
+      padding: 22px;
+      background: white;
+      border-bottom: 1px solid rgba(196, 139, 70, 0.1);
+      text-align: center;
+    }
+
+    .chat-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      margin: 0;
+      color: var(--skin-dark);
+      text-transform: uppercase;
+    }
+
+    .chat-header h2 span {
+      color: var(--skin-gold);
+    }
+
+    #chatOutput {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: rgba(253, 251, 249, 0.4);
+    }
+
+    #chatOutput p {
+      margin: 0;
+      padding: 14px 18px;
+      max-width: 85%;
+      word-wrap: break-word;
+      font-size: 13px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: slideIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background-color: var(--skin-gold);
+      color: white;
+      border-radius: 12px 12px 0px 12px;
+      box-shadow: 0 4px 12px rgba(196, 139, 70, 0.2);
+    }
+
+    .bot-message {
+      align-self: flex-start;
+      background-color: var(--bot-bubble);
+      color: var(--skin-dark);
+      border: 1px solid rgba(196, 139, 70, 0.1);
+      border-radius: 12px 12px 12px 0px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    /* Styling links/remedies in bot messages */
+    .bot-message a {
+      color: var(--skin-gold);
+      font-weight: 600;
+      text-decoration: none;
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .bot-message strong {
+      color: var(--skin-dark);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .typing-indicator {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--skin-gold);
+      padding-left: 10px;
+      font-style: normal;
+    }
+
+    #inputContainer {
+      display: flex;
+      padding: 20px;
+      background: white;
+      border-top: 1px solid rgba(196, 139, 70, 0.1);
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* Styled file input appearance */
+    #fileInput {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      background: var(--skin-cream);
+      font-size: 12px;
+      font-family: 'Poppins', sans-serif;
+      color: #666;
+    }
+
+    #sendButton {
+      background: var(--skin-dark);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0 25px;
+      height: 45px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    #sendButton:hover {
+      background: var(--skin-gold);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(196, 139, 70, 0.3);
+    }
+
+    /* Scrollbar */
+    #chatOutput::-webkit-scrollbar { width: 4px; }
+    #chatOutput::-webkit-scrollbar-thumb { background: rgba(196, 139, 70, 0.2); }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="chatContainer">
+  <div class="chat-header">
+      <h2>SKIN<span>SENSE</span> AI</h2>
+  </div>
+  <div id="chatOutput"></div>
+  <div id="inputContainer">
+    <input type="file" id="fileInput" accept="image/*" />
+    <button id="sendButton">Analyze</button>
+  </div>
+</div>
+
+<script>
+// (Keep your existing JavaScript logic here - it will function perfectly with the new classes)
+const chatOutput = document.getElementById('chatOutput');
+const fileInput  = document.getElementById('fileInput');
+const sendButton = document.getElementById('sendButton');
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    document.cookie.split(';').forEach(cookie => {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
+      }
+    });
+  }
+  return cookieValue;
+}
+
+sendButton.addEventListener('click', () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  appendMessage(`<i class="bi bi-file-earmark-image me-2"></i> ${file.name}`, 'user-message');
+  scrollBottom();
+
+  const typing = appendTyping();
+  scrollBottom();
+
+  const formData = new FormData();
+  formData.append('image', file);
+  formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+
+  fetch('/predict_skin_disease/', {
+    method: 'POST',
+    body: formData
+  })
+  .then(r => r.json())
+  .then(data => {
+    typing.remove();
+
+    const messages = [];
+    if (data.error) {
+      messages.push(`<strong>Error</strong> ${data.error}`);
+    } else if (data.alert) {
+      messages.push(
+        `<strong>Analysis Result</strong> ${data.predicted_class}`,
+        `<span style="color:#c0392b; font-weight:bold;">${data.alert}</span>`
+      );
+    } else {
+      messages.push(
+        `<strong>Detected Condition</strong> ${data.predicted_class}`,
+        `<strong>Recommended Remedy</strong> ${data.remedy}`,
+        `<a href="${data.remedy_link}" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i> Research Source</a>`,
+        `<strong>Clinical Medicine</strong> ${data.medicine}`,
+        `<a href="${data.medicine_link}" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i> View Medicine Details</a>`
+      );
+    }
+
+    showMessagesSequentially(messages);
+    fileInput.value = '';
+  })
+  .catch(err => {
+    typing.textContent = 'System temporarily unavailable.';
+    console.error(err);
+  });
+});
+
+function appendMessage(message, className) {
+  const p = document.createElement('p');
+  p.className = className;
+  p.innerHTML = message;
+  chatOutput.appendChild(p);
+}
+
+function appendTyping() {
+  const typing = document.createElement('p');
+  typing.className = 'typing-indicator';
+  typing.textContent = 'Processing clinical data...';
+  chatOutput.appendChild(typing);
+  return typing;
+}
+
+function showMessagesSequentially(messages) {
+  let delay = 0;
+  messages.forEach((msg, index) => {
+    setTimeout(() => {
+      appendMessage(msg, 'bot-message');
+      scrollBottom();
+    }, delay);
+    delay += 600; 
+  });
+}
+
+function scrollBottom() {
+  chatOutput.scrollTop = chatOutput.scrollHeight;
+}
+
+window.onload = () => {
+  appendMessage("Welcome to the SkinSense Diagnostics hub. Please upload a high-resolution image for analysis.", 'bot-message');
+  scrollBottom();
+};
+</script>
+
+</body>
+</html>

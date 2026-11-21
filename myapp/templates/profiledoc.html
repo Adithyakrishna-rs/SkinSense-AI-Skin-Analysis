@@ -1,0 +1,583 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Edit Prescription | SkinSense</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="{% static 'user/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'user/css/style.css' %}" rel="stylesheet">
+    
+<style>
+    :root {
+        --skin-gold: #c48b46;
+        --skin-cream: #fdfbf9;
+        --skin-dark: #333333;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--skin-cream); color: var(--skin-dark); }
+    .brand-font { font-family: 'Playfair Display', serif; }
+
+    /* Navbar Styling */
+    .nav-link {
+        font-size: 0.75rem !important;
+        color: var(--skin-dark) !important;
+        letter-spacing: 2px;
+        transition: 0.3s;
+        font-weight: 600;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--skin-gold) !important; }
+
+    /* --- FORM STYLING --- */
+    .edit-container {
+        background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("{% static 'user/img/bg1.jpeg' %}") center center no-repeat;
+        background-size: cover;
+        padding: 100px 0;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    .form-glass-card h3 {
+        font-family: 'Playfair Display', serif;
+        color: var(--skin-dark);
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--skin-gold);
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    /* Django Form Elements styling */
+    form p {
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
+    form label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #777;
+        margin-bottom: 8px;
+    }
+
+    form input, form select, form textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fdfdfd;
+        transition: 0.3s;
+    }
+
+    form input:focus {
+        border-color: var(--skin-gold);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(196, 139, 70, 0.1);
+    }
+
+    .btn-update {
+        background-color: var(--skin-gold);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 5px;
+        letter-spacing: 1px;
+        font-weight: 600;
+        transition: 0.4s;
+        width: 100%;
+        text-transform: uppercase;
+    }
+
+    .btn-update:hover {
+        background-color: #a8763a;
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .btn-cancel {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #999;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+</style>
+</head>
+
+<body>
+    <div class="container-fluid px-0 d-none d-lg-block" style="background-color: #fdf8f5; border-bottom: 1px solid #eee;">
+        <div class="row gx-0 align-items-center">
+            <div class="col-lg-4 text-start py-2 ps-5">
+                <small class="text-muted"><i class="bi bi-envelope-paper me-2"></i> hello@skinsense.com</small>
+                <small class="text-muted ms-4"><i class="bi bi-telephone me-2"></i> +91 8596780304</small>
+            </div>
+            <div class="col-lg-4 text-center py-3">
+                <a href="/" class="navbar-brand m-0">
+                    <h1 class="m-0 display-5 fw-light tracking-widest text-dark" style="letter-spacing: 4px; font-family: 'Playfair Display', serif;">
+                        SKIN<span style="color: #d4a373 !important;">SENSE</span>
+                    </h1>
+                </a>
+            </div>
+            <div class="col-lg-4 text-end py-2 pe-5">
+                <a class="btn btn-sm btn-outline-secondary border-0" href="#"><i class="bi bi-instagram"></i></a>
+                <a class="btn btn-sm btn-outline-secondary border-0" href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top shadow-sm py-lg-0 px-4 px-lg-5">
+        <a href="/" class="navbar-brand d-block d-lg-none">
+            <h1 class="m-0 text-dark" style="letter-spacing: 2px;">SKIN SENSE</h1>
+        </a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
+             <div class="navbar-nav py-3 py-lg-0">
+                <a href="{% url 'doctorhome' %}" class="nav-item nav-link active px-4 text-uppercase small fw-bold">Home</a>
+                <a href="/profiledoc" class="nav-item nav-link px-4 text-uppercase small fw-bold">My Profile</a>
+                <a href="/appointlist" class="nav-item nav-link px-4 text-uppercase small fw-bold">Scheduled Appointments</a>
+
+                <a href="{% url 'slot' %}" class="nav-item nav-link px-4 text-uppercase small fw-bold">Add Slot</a>
+                
+                <a href="/logout" class="nav-item nav-link px-4 text-uppercase small fw-bold text-danger">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Navbar End -->
+     
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="update-card wow fadeInUp" data-wow-delay="0.1s" 
+                 style="background: #ffffff; padding: 50px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05); border: 1px solid #f2e9e1; border-radius: 12px; margin-bottom: 80px;">
+                
+                <div class="text-center mb-5">
+                    <p style="color: #c48b46; letter-spacing: 3px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px;">
+                        Professional Settings
+                    </p>
+                    
+                    <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #333; margin-bottom: 0;">Update Profile</h1>
+                    <div class="mx-auto mt-3" style="width: 60px; height: 3px; background-color: #c48b46;"></div>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-5">
+                        <h5 style="font-family: 'Playfair Display', serif; color: #c48b46; border-bottom: 1px solid #f2e9e1; padding-bottom: 12px; font-weight: 600; margin-bottom: 25px;">
+                            <i class="bi bi-person-badge me-2"></i>Clinical Information
+                        </h5>
+                        <div class="django-form-wrapper" style="color: #555;">
+                            {{ pro.as_p }}
+                            <small class="js-feedback"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h5 style="font-family: 'Playfair Display', serif; color: #c48b46; border-bottom: 1px solid #f2e9e1; padding-bottom: 12px; font-weight: 600; margin-bottom: 25px;">
+                            <i class="bi bi-shield-lock me-2"></i>Account Credentials
+                        </h5>
+                        <div class="django-form-wrapper" style="color: #555;">
+                            {{ log.as_p }}
+                            <small class="js-feedback"></small>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <input type="submit" value="Save Changes" 
+                               style="background-color: #333; color: #fff; padding: 15px 50px; border: none; border-radius: 5px; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; width: 100%; transition: 0.3s; cursor: pointer;">
+                        
+                        <a href="/docprofile" class="btn btn-link mt-4 text-decoration-none small" 
+                           style="color: #999; text-transform: uppercase; font-weight: 600; font-size: 0.75rem; letter-spacing: 1px;">
+                           Cancel and Return
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* Targeting Django's auto-generated 'as_p' elements specifically */
+    .django-form-wrapper p {
+        margin-bottom: 20px;
+    }
+    .django-form-wrapper label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        color: #333;
+        letter-spacing: 0.5px;
+    }
+    .django-form-wrapper input, .django-form-wrapper select, .django-form-wrapper textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #eee;
+        background-color: #fafafa;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    .django-form-wrapper input:focus {
+        outline: none;
+        border-color: #c48b46;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(196, 139, 70, 0.1);
+    }
+</style>
+
+<script>
+    // In-line script to ensure the submit button gets the hover effect correctly
+    const submitBtn = document.querySelector('input[type="submit"]');
+    if (submitBtn) {
+        submitBtn.addEventListener('mouseover', function() { this.style.backgroundColor = '#c48b46'; });
+        submitBtn.addEventListener('mouseout', function() { this.style.backgroundColor = '#333'; });
+    }
+</script>
+ <!-- Footer Start -->
+<div class="container-fluid py-4 wow fadeIn" data-wow-delay="0.1s" style="background-color: #ddbd9d; border-top: 1px solid #eee; margin-top: 4rem;">
+    <div class="container py-4">
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6">
+                <h3 class="mb-3 text-uppercase" style="color: #c48b46; letter-spacing: 2px; font-weight: 400; font-size: 1.5rem;">
+                    SkinSense
+                </h3>
+                <p class="mb-3 small" style="color: #666; line-height: 1.6;">
+                    SkinSense is a premium dermatology clinic offering advanced treatments with personalized care.
+                </p>
+                <div class="d-flex">
+                    <a class="btn btn-sm btn-square me-2" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm btn-square me-2" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-sm btn-square me-0" href="#" style="background: white; border: 1px solid #c48b46; color: #c48b46; width: 32px; height: 32px;"><i class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Contact Info</h5>
+                <p class="mb-2 small" style="color: #666;"><i class="fa fa-map-marker-alt me-2" style="color: #c48b46;"></i>Main Road, City, India</p>
+                <p class="mb-2 small" style="color: #666;"><i class="fa fa-phone-alt me-2" style="color: #c48b46;"></i>+91 8596780304</p>
+                <p class="mb-0 small" style="color: #666;"><i class="fa fa-envelope me-2" style="color: #c48b46;"></i>skinsense@gmail.com</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Quick Links</h5>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="/register" style="color: #666;">Registration</a>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="/login2" style="color: #666;">Login</a>
+                <a class="btn btn-link text-decoration-none mb-1 p-0 d-block small" href="#" style="color: #666;">Our Story</a>
+                <a class="btn btn-link text-decoration-none mb-0 p-0 d-block small" href="#" style="color: #666;">Privacy Policy</a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3" style="color: #333; font-weight: 600;">Newsletter</h5>
+                <div class="position-relative w-100">
+                    <input class="form-control w-100 py-2 ps-3 pe-5 small" type="email" placeholder="Your email" style="background: #fff; border-color: #ddd; font-size: 0.85rem;">
+                    <button type="button" class="btn btn-sm py-1 position-absolute top-0 end-0 mt-1 me-1 text-white" style="background-color: #c48b46;">
+                        Join
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid py-3" style="background: #f8f8f8; border-top: 1px solid #eee;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0" style="color: #999; font-size: 0.75rem;">
+                    &copy; 2026 <a href="#" class="text-decoration-none" style="color: #c48b46;">SkinSense</a>. All Rights Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end" style="color: #999; font-size: 0.75rem;">
+                    Excellence in Dermatological Care
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'user/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'user/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'user/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'user/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'user/lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'user/lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'user/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'user/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'user/js/main.js' %}"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    if (!form) return;
+
+    let submitted = false;
+    const touched = new Set(); // tracks fields the user interacted with
+
+    // Enable or disable the submit button based on validation
+    const submitButton = form.querySelector("button[type='submit']");
+
+    // Helper function to enable/disable the submit button
+    function toggleSubmitButton() {
+        const isFormValid = validateAll(true);
+        submitButton.disabled = !isFormValid; // Disable submit button if invalid
+    }
+
+    function getAllFields() {
+        return Array.from(form.querySelectorAll("input, select, textarea"))
+            .filter(el => el.name && el.type !== "hidden" && el.type !== "submit" && el.type !== "button");
+    }
+
+    // Ensure feedback element is available for each field
+    function ensureFeedbackEl(input) {
+        let fb = input.parentElement.querySelector(".js-feedback");
+        if (!fb) {
+            fb = document.createElement("small");
+            fb.className = "js-feedback";
+            fb.style.display = "block";
+            fb.style.marginTop = "4px";
+            input.parentElement.appendChild(fb);
+        }
+        return fb;
+    }
+
+    // Clear feedback
+    function clearFeedback(input) {
+        const fb = input.parentElement.querySelector(".js-feedback");
+        if (fb) fb.textContent = "";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Set invalid feedback
+    function setInvalid(input, msg) {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = "❌ " + msg;
+        fb.style.color = "red";
+        input.style.borderColor = "red";
+    }
+
+    // Set valid feedback
+    function setValid(input, msg = "") {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = msg ? ("✅ " + msg) : "";
+        fb.style.color = "green";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Validation rules for specific fields
+    const rules = {
+       name: {
+            required: true,
+            pattern: /^[A-Za-z ]+$/,
+            invalidMsg: "Name must contain only letters and spaces",
+            validMsg: "Valid name"
+        },
+        age: {
+            required: true,
+            pattern: /^[1-9][0-9]*$/, 
+            invalidMsg: "Age must be a valid number",
+            validMsg: "Valid age"
+        },
+        experience: {
+            required: true,
+            pattern: /^[1-9][0-9]*$/, 
+            invalidMsg: "Experience must be a valid number",
+            validMsg: "Valid experience"
+        },
+        consultation_fee: {
+            required: true,
+            pattern: /^[1-9][0-9]*$/, 
+            invalidMsg: "Fees must be a valid number",
+            validMsg: "Valid Fees"
+        },
+        contact: {
+            required: true,
+            pattern: /^\d{10}$/,
+            invalidMsg: "Enter a valid 10-digit phone number",
+            validMsg: "Valid phone number"
+        },
+        hospital: {
+            required: true,
+            pattern: /^[A-Za-z ]+$/,
+            invalidMsg: "Please enter a valid clinic or hospital name (min 3 chars)",
+            validMsg: "Looks good!"
+        },
+        qualification: {
+            required: true,
+            pattern: /^[A-Za-z ,]+$/,
+            invalidMsg: "Please enter a valid qualification",
+            validMsg: "Looks good!"
+        },
+        email: {
+            required: true,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            invalidMsg: "Enter a valid email address",
+            validMsg: "Valid email"
+        }
+    };
+
+    // Check if a value is empty
+    function isEmptyValue(el) {
+        return (el.value || "").trim() === "";
+    }
+
+    // Validate a single field
+    function validateField(el, showMsg) {
+        const name = el.name;
+        let ok = true;
+
+        // Handle specific validations for name, contact, email, password
+        if (rules[name]) {
+            if (el.type === "radio" || el.type === "file" || el.tagName.toLowerCase() === "select") {
+                return true;
+            }
+
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (rules[name].pattern && !rules[name].pattern.test(el.value.trim())) {
+                ok = false;
+                if (showMsg) setInvalid(el, rules[name].invalidMsg);
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (showMsg) setValid(el, rules[name].validMsg);
+            else clearFeedback(el);
+        } else {
+            // For other fields, just check for required
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+            } else {
+                clearFeedback(el);
+            }
+        }
+
+        return ok;
+    }
+
+    // Validate radio buttons for gender
+    function validateRadioGroups(showMsg) {
+        const radios = Array.from(form.querySelectorAll('input[type="radio"][name]'));
+        const names = [...new Set(radios.map(r => r.name))];
+        let ok = true;
+
+        names.forEach(groupName => {
+            const checked = form.querySelector(`input[type="radio"][name="${groupName}"]:checked`);
+            const first = form.querySelector(`input[type="radio"][name="${groupName}"]`);
+            if (!first) return;
+
+            if (!checked) {
+                ok = false;
+                if (showMsg) setInvalid(first, "Please select an option");
+                else clearFeedback(first);
+            } else {
+                if (showMsg) setValid(first);
+                else clearFeedback(first);
+            }
+        });
+
+        return ok;
+    }
+
+    // Validate all fields
+    function validateAll(showMsg) {
+        let ok = true;
+
+        // Validate specific fields (name, contact, email, password)
+        const fields = getAllFields().filter(el => el.type !== "radio");
+        fields.forEach(el => {
+            const shouldShow = showMsg && (submitted || touched.has(el.name));
+            if (!validateField(el, shouldShow)) ok = false;
+        });
+
+        // Validate radio groups (gender)
+        if (!validateRadioGroups(showMsg)) ok = false;
+
+        return ok;
+    }
+
+    // Handle form submission
+    form.addEventListener("submit", (e) => {
+        submitted = true;
+        const ok = validateAll(true);
+        if (!ok) {
+            e.preventDefault();
+            alert("❌ Please fill all required fields correctly.");
+        }
+    });
+
+    // Real-time validation on input or blur
+    getAllFields().forEach(el => {
+        const evt = (el.type === "file" || el.tagName.toLowerCase() === "select") ? "change" : "input";
+
+        el.addEventListener(evt, () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+
+        el.addEventListener("blur", () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Real-time validation for radio buttons
+    form.querySelectorAll('input[type="radio"]').forEach(r => {
+        r.addEventListener("change", () => {
+            touched.add("radio");
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Initially disable the submit button until the form is valid
+    toggleSubmitButton();
+});
+</script>
+
+</body>
+
+</html>

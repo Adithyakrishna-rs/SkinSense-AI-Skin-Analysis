@@ -1,0 +1,453 @@
+{% extends 'indexheader.html' %}
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    :root {
+        --skinsense-gold: #c48b46;
+        --text-muted: #888;
+        --border-color: #e0d5c5;
+    }
+
+    .form-wrapper-seamless {
+        background-color: #fdfbf9;
+        padding: 4rem 15px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .form-content-max {
+        max-width: 850px;
+        margin: 0 auto;
+    }
+
+    .brand-title-large {
+        color: var(--skinsense-gold);
+        letter-spacing: 10px;
+        font-weight: 300;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        font-size: 2.5rem;
+    }
+
+    .subtitle-accent {
+        text-align: center;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        color: var(--text-muted);
+        margin-bottom: 5rem;
+        position: relative;
+    }
+
+    .subtitle-accent::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 1px;
+        background: var(--skinsense-gold);
+        margin: 15px auto 0;
+    }
+
+    .field-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--skinsense-gold);
+        margin-bottom: 0px;
+    }
+
+    .input-seamless {
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        border-radius: 0;
+        padding: 12px 0;
+        width: 100%;
+        background: transparent !important;
+        transition: all 0.4s ease;
+        font-size: 1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .input-seamless:focus {
+        outline: none;
+        border-bottom: 1px solid #333;
+        padding-left: 10px;
+    }
+
+    .gender-wrap {
+        display: flex;
+        gap: 35px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 2.5rem;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--skinsense-gold);
+        border-color: var(--skinsense-gold);
+    }
+
+    .btn-seamless {
+        background-color: var(--skinsense-gold);
+        color: white;
+        border: none;
+        border-radius: 0;
+        padding: 18px 0;
+        font-weight: 600;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        width: 100%;
+        transition: 0.5s;
+        margin-top: 2rem;
+    }
+
+    .btn-seamless:hover {
+        background-color: #333;
+        letter-spacing: 6px;
+        color: white;
+    }
+
+    .eye-icon-wrap {
+        position: absolute;
+        right: 0;
+        bottom: 53px;
+        color: var(--skinsense-gold);
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+  .js-feedback {
+    font-size: 0.8rem;
+    color: red;
+    margin-top: 5px;
+}
+
+input:invalid {
+    border-color: red;
+}
+
+input:valid {
+    border-color: green;
+}
+</style>
+
+<div class="form-wrapper-seamless">
+    <div class="form-content-max">
+        
+        <h1 class="subtitle-accent">Patient Registration</h1>
+
+        <form action="" method="post" class="signin-form">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="field-label">Full Name</label>
+                    <input type="text" class="input-seamless" name="name" placeholder="Enter your full name" required>
+                     <small class="js-feedback"></small> <!-- feedback here -->
+
+                </div>
+
+                <div class="col-md-6">
+                    <label class="field-label">Gender</label>
+                    <div class="gender-wrap">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="Male" value="Male" checked>
+                            <label class="form-check-label small text-muted" for="Male">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="Female" value="Female">
+                            <label class="form-check-label small text-muted" for="Female">Female</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="Others" value="Others">
+                            <label class="form-check-label small text-muted" for="Others">Other</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="field-label">Age</label>
+                    <input type="text" class="input-seamless" name="age" placeholder="e.g. 25" required>
+                    <small class="js-feedback"></small> 
+                </div>
+
+                <div class="col-md-6">
+                    <label class="field-label">Skin Type</label>
+                    <select class="input-seamless form-select" name="skin_type" required>
+                        <option value="" disabled selected>Select your skin type...</option>
+                        <option value="dry">Dry</option>
+                        <option value="oily">Oily</option>
+                        <option value="combination">Combination</option>
+                        <option value="sensitive">Sensitive</option>
+                        <option value="normal">Normal</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="field-label">Contact Number</label>
+                    <input type="text" class="input-seamless" name="contact" placeholder="+91 XXXXX XXXXX" required>
+                    <small class="js-feedback"></small> 
+                </div>
+
+                <div class="col-md-6">
+                    <label class="field-label">Email Address</label>
+                    <input type="email" class="input-seamless" name="email" placeholder="yourname@example.com" required>
+                    <small class="js-feedback"></small> 
+                </div>
+
+                <div class="col-12 position-relative">
+                    <label class="field-label">Create Password</label>
+                    <input id="password-field" type="password" class="input-seamless" name="password" required>
+                    <i class="fa fa-eye eye-icon-wrap" id="togglePassword"></i>
+                    <small class="js-feedback"></small> 
+                </div>
+            </div>
+
+            <button type="submit" class="btn-seamless">Join SkinSense</button>
+            
+            <div class="text-center mt-5">
+                <a href="/login2" class="text-decoration-none small text-muted" style="letter-spacing: 1px;">Already have an account? <span style="color: var(--skinsense-gold); font-weight: 600;">LOGIN</span></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordField = document.querySelector('#password-field');
+
+    togglePassword.addEventListener('click', function () {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    if (!form) return;
+
+    let submitted = false;
+    const touched = new Set(); // tracks fields the user interacted with
+
+    // Enable or disable the submit button based on validation
+    const submitButton = form.querySelector("button[type='submit']");
+
+    // Helper function to enable/disable the submit button
+    function toggleSubmitButton() {
+        const isFormValid = validateAll(true);
+        submitButton.disabled = !isFormValid; // Disable submit button if invalid
+    }
+
+    function getAllFields() {
+        return Array.from(form.querySelectorAll("input, select, textarea"))
+            .filter(el => el.name && el.type !== "hidden" && el.type !== "submit" && el.type !== "button");
+    }
+
+    // Ensure feedback element is available for each field
+    function ensureFeedbackEl(input) {
+        let fb = input.parentElement.querySelector(".js-feedback");
+        if (!fb) {
+            fb = document.createElement("small");
+            fb.className = "js-feedback";
+            fb.style.display = "block";
+            fb.style.marginTop = "4px";
+            input.parentElement.appendChild(fb);
+        }
+        return fb;
+    }
+
+    // Clear feedback
+    function clearFeedback(input) {
+        const fb = input.parentElement.querySelector(".js-feedback");
+        if (fb) fb.textContent = "";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Set invalid feedback
+    function setInvalid(input, msg) {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = "❌ " + msg;
+        fb.style.color = "red";
+        input.style.borderColor = "red";
+    }
+
+    // Set valid feedback
+    function setValid(input, msg = "") {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = msg ? ("✅ " + msg) : "";
+        fb.style.color = "green";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Validation rules for specific fields
+    const rules = {
+        name: {
+            required: true,
+            pattern: /^[A-Za-z ]+$/,
+            invalidMsg: "Name must contain only letters and spaces",
+            validMsg: "Valid name"
+        },
+        age: {
+            required: true,
+            pattern: /^[1-9][0-9]*$/, 
+            invalidMsg: "Age must be a valid number",
+            validMsg: "Valid age"
+        },
+        
+        contact: {
+            required: true,
+            pattern: /^\d{10}$/,
+            invalidMsg: "Enter a valid 10-digit phone number",
+            validMsg: "Valid phone number"
+        },
+        email: {
+            required: true,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            invalidMsg: "Enter a valid email address",
+            validMsg: "Valid email"
+        },
+        password: {
+            required: true,
+            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/,
+            invalidMsg: "Min 8 chars with uppercase, lowercase, number & special char",
+            validMsg: "Strong password"
+        }
+    };
+
+    // Check if a value is empty
+    function isEmptyValue(el) {
+        return (el.value || "").trim() === "";
+    }
+
+    // Validate a single field
+    function validateField(el, showMsg) {
+        const name = el.name;
+        let ok = true;
+
+        // Handle specific validations for name, contact, email, password
+        if (rules[name]) {
+            if (el.type === "radio" || el.type === "file" || el.tagName.toLowerCase() === "select") {
+                return true;
+            }
+
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (rules[name].pattern && !rules[name].pattern.test(el.value.trim())) {
+                ok = false;
+                if (showMsg) setInvalid(el, rules[name].invalidMsg);
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (showMsg) setValid(el, rules[name].validMsg);
+            else clearFeedback(el);
+        } else {
+            // For other fields, just check for required
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+            } else {
+                clearFeedback(el);
+            }
+        }
+
+        return ok;
+    }
+
+    // Validate radio buttons for gender
+    function validateRadioGroups(showMsg) {
+        const radios = Array.from(form.querySelectorAll('input[type="radio"][name]'));
+        const names = [...new Set(radios.map(r => r.name))];
+        let ok = true;
+
+        names.forEach(groupName => {
+            const checked = form.querySelector(`input[type="radio"][name="${groupName}"]:checked`);
+            const first = form.querySelector(`input[type="radio"][name="${groupName}"]`);
+            if (!first) return;
+
+            if (!checked) {
+                ok = false;
+                if (showMsg) setInvalid(first, "Please select an option");
+                else clearFeedback(first);
+            } else {
+                if (showMsg) setValid(first);
+                else clearFeedback(first);
+            }
+        });
+
+        return ok;
+    }
+
+    // Validate all fields
+    function validateAll(showMsg) {
+        let ok = true;
+
+        // Validate specific fields (name, contact, email, password)
+        const fields = getAllFields().filter(el => el.type !== "radio");
+        fields.forEach(el => {
+            const shouldShow = showMsg && (submitted || touched.has(el.name));
+            if (!validateField(el, shouldShow)) ok = false;
+        });
+
+        // Validate radio groups (gender)
+        if (!validateRadioGroups(showMsg)) ok = false;
+
+        return ok;
+    }
+
+    // Handle form submission
+    form.addEventListener("submit", (e) => {
+        submitted = true;
+        const ok = validateAll(true);
+        if (!ok) {
+            e.preventDefault();
+            alert("❌ Please fill all required fields correctly.");
+        }
+    });
+
+    // Real-time validation on input or blur
+    getAllFields().forEach(el => {
+        const evt = (el.type === "file" || el.tagName.toLowerCase() === "select") ? "change" : "input";
+
+        el.addEventListener(evt, () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+
+        el.addEventListener("blur", () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Real-time validation for radio buttons
+    form.querySelectorAll('input[type="radio"]').forEach(r => {
+        r.addEventListener("change", () => {
+            touched.add("radio");
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Initially disable the submit button until the form is valid
+    toggleSubmitButton();
+});
+</script>
+{% endblock %}
+

@@ -1,0 +1,369 @@
+{% extends 'doctorheader.html' %}
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* --- SKINSENSE BRAND IDENTITY --- */
+  --brand-gold: #c48b46;
+  --brand-gold-lt: #fdfbf9;
+  --brand-gold-dim: rgba(196, 139, 70, 0.08);
+  --ink: #1a1a1a;
+  --ink-muted: #555555;
+  --ink-faint: #999999;
+  --warm-bg: #fdfbf9; 
+  --card: #ffffff;
+  --border: #e0d5c5;
+  --border-soft: rgba(224, 213, 197, 0.4);
+  
+  --r-sm: 0px; /* Sharp editorial edges */
+  --r-md: 4px;
+  --r-lg: 0px;
+  --shadow: 0 15px 40px rgba(0,0,0,0.04);
+}
+
+.sp-wrap {
+  font-family: 'Poppins', sans-serif;
+  background: var(--warm-bg);
+  min-height: 100vh;
+  padding: 60px 20px 80px;
+  color: var(--ink);
+}
+
+/* ── Toast alerts ── */
+.sp-alerts { max-width: 760px; margin: 0 auto 30px; }
+.sp-alert {
+  display: flex; align-items: center; gap: 12px;
+  padding: 15px 20px;
+  font-size: 13px;
+  margin-bottom: 10px;
+  border-left: 4px solid var(--brand-gold);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+.sp-alert.success { color: var(--brand-gold); border-color: var(--brand-gold); }
+.sp-alert.error   { color: #991b1b; border-color: #dc2626; }
+
+/* ── Page header ── */
+.sp-header {
+  max-width: 760px; margin: 0 auto 40px;
+  display: flex; align-items: flex-end;
+  justify-content: space-between; flex-wrap: wrap; gap: 20px;
+}
+.sp-eyebrow {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--brand-gold); margin-bottom: 8px;
+}
+.sp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; font-weight: 500; line-height: 1;
+  color: var(--ink);
+}
+.sp-title em { font-style: italic; color: var(--brand-gold); font-weight: 400; }
+.sp-sub {
+  font-size: 14px; color: var(--ink-faint); margin-top: 10px;
+  max-width: 500px; line-height: 1.8; font-weight: 300;
+}
+
+/* ── Main card ── */
+.sp-card {
+  max-width: 760px; margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+/* ── Section anatomy ── */
+.sp-section {
+  padding: 35px 40px;
+  border-bottom: 1px solid var(--warm-bg);
+}
+.sp-section:last-child { border-bottom: none; }
+.sp-section-title {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--brand-gold); margin-bottom: 25px;
+  border-bottom: 1px solid var(--brand-gold-dim);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+/* ── Mode selector ── */
+.mode-options { display: flex; gap: 15px; }
+.mode-opt { flex: 1; position: relative; }
+.mode-opt input[type="radio"] { position: absolute; opacity: 0; }
+.mode-opt label {
+  display: flex; align-items: center; gap: 15px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.mode-opt input:checked + label {
+  border-color: var(--brand-gold);
+  background: var(--brand-gold-dim);
+}
+.mode-label-name { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.mode-label-desc { font-size: 11px; color: var(--ink-faint); }
+
+/* ── Seamless Inputs ── */
+.sp-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;}
+.sp-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--brand-gold);
+}
+
+.sp-section input[type="date"],
+.sp-section input[type="time"],
+.sp-input {
+  all: unset;
+  width: 100%;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+  transition: 0.4s;
+}
+.sp-section input:focus {
+  border-bottom: 1px solid var(--ink);
+}
+
+/* ── Weekday chips ── */
+.weekday-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.wd-chip label {
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  cursor: pointer; transition: 0.3s;
+}
+.wd-chip input:checked + label {
+  background: var(--brand-gold);
+  color: #fff;
+  border-color: var(--brand-gold);
+}
+
+/* ── Actions ── */
+.sp-actions {
+  display: flex; align-items: center; gap: 20px;
+  padding: 40px;
+  background: #fafaf8;
+}
+.btn-save {
+  padding: 18px 45px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer; transition: 0.4s;
+  box-shadow: 10px 10px 0px var(--brand-gold);
+}
+.btn-save:hover { background: var(--brand-gold); box-shadow: 10px 10px 0px var(--ink); }
+
+.btn-view-slots {
+  background: transparent;
+  color: var(--brand-gold);
+  border: 1px solid var(--brand-gold);
+  padding: 12px 20px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ── Slots Panel ── */
+.sp-panel {
+  position: fixed; right: 0; top: 0; width: 400px; height: 100vh;
+  background: #fff; z-index: 1000;
+  transform: translateX(100%); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -20px 0 50px rgba(0,0,0,0.05);
+  padding: 40px;
+}
+.sp-panel.active { transform: translateX(0); }
+.sp-panel-title { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--brand-gold); }
+.slot-row {
+  padding: 20px 0; border-bottom: 1px solid var(--border-soft);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.slot-time-range { font-weight: 600; font-size: 14px; letter-spacing: 0.5px; }
+.slot-tag { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--brand-gold); font-weight: 700; }
+
+.sp-overlay {
+  position: fixed; inset: 0; background: rgba(26,26,26,0.1);
+  backdrop-filter: blur(5px); z-index: 999; display: none;
+}
+.sp-overlay.active { display: block; }
+
+.btn-cancel { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink-faint); text-decoration: none; }
+</style>
+
+<div class="sp-wrap">
+
+  {% if messages %}
+    <div class="sp-alerts">
+      {% for message in messages %}
+        <div class="sp-alert {{ message.tags }}">
+          <span>{{ message }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="sp-header">
+    <div>
+      <div class="sp-eyebrow">Clinical Availability</div>
+      <div class="sp-title">Slot <em>Planner</em></div>
+      <div class="sp-sub">Design your consultation schedule. Choose between a specific date or a recurring clinical window.</div>
+    </div>
+    <button class="btn-view-slots" onclick="openPanel()">
+      Active Slots ({{ slots|length }})
+    </button>
+  </div>
+
+  <div class="sp-card">
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="sp-section">
+        <div class="sp-section-title">Step 01. Schedule Type</div>
+        <div class="mode-options">
+          <div class="mode-opt">
+            <input type="radio" name="mode" id="mode_single" value="single" checked>
+            <label for="mode_single">
+              <div>
+                <div class="mode-label-name">Single Session</div>
+                <div class="mode-label-desc">One-off availability</div>
+              </div>
+            </label>
+          </div>
+          <div class="mode-opt">
+            <input type="radio" name="mode" id="mode_recurring" value="recurring">
+            <label for="mode_recurring">
+              <div>
+                <div class="mode-label-name">Recurring Window</div>
+                <div class="mode-label-desc">Weekly repeat pattern</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-section mode-block" data-mode="single">
+        <div class="sp-section-title">Step 02. Select Date</div>
+        <div class="sp-field">
+          <label class="sp-label">Consultation Date</label>
+          {{ form.slot_date }}
+        </div>
+      </div>
+
+      <div class="sp-section mode-block" data-mode="recurring" style="display:none;">
+        <div class="sp-section-title">Step 02. Date Range & Days</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div class="sp-field">
+            <label class="sp-label">Start From</label>
+            {{ form.start_date }}
+          </div>
+          <div class="sp-field">
+            <label class="sp-label">End At</label>
+            {{ form.end_date }}
+          </div>
+        </div>
+        <div class="sp-field" style="margin-top:20px;">
+          <label class="sp-label">Active Weekdays</label>
+          <div class="weekday-grid">
+            {% for checkbox in form.weekdays %}
+              <div class="wd-chip">
+                {{ checkbox.tag }}
+                <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-section">
+        <div class="sp-section-title">Step 03. Time Allocation</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div class="sp-field">
+            <label class="sp-label">Shift Start</label>
+            {{ form.starttime }}
+          </div>
+          <div class="sp-field">
+            <label class="sp-label">Shift End</label>
+            {{ form.endtime }}
+          </div>
+        </div>
+        
+        <p style="font-size: 11px; color: var(--brand-gold); margin: 30px 0 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Clinical Break (Optional)</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div class="sp-field">
+            {{ form.break_start }}
+          </div>
+          <div class="sp-field">
+            {{ form.break_end }}
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-actions">
+        <button type="submit" class="btn-save">Confirm Schedule</button>
+        <a href="{% url 'doctorhome' %}" class="btn-cancel">Discard Changes</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="sp-overlay" id="overlay" onclick="closePanel()"></div>
+<div class="sp-panel" id="panel">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+    <h2 class="sp-panel-title">Your Slots</h2>
+    <button onclick="closePanel()" style="background:none; border:none; font-size: 20px; cursor:pointer;">&times;</button>
+  </div>
+  
+  {% for s in slots %}
+    <div class="slot-row">
+      <div>
+        <div class="slot-time-range">{{ s.starttime|time:"g:i A" }} - {{ s.endtime|time:"g:i A" }}</div>
+        <div class="slot-tag">{% if s.slot_date %}{{ s.slot_date }}{% else %}Recurring{% endif %}</div>
+      </div>
+      <form method="POST" action="{% url 'delete_slot' s.id %}">
+        {% csrf_token %}
+        <button type="submit" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size: 12px; font-weight: 700;">DELETE</button>
+      </form>
+    </div>
+  {% empty %}
+    <p style="color: var(--ink-faint); font-size: 13px;">No slots scheduled yet.</p>
+  {% endfor %}
+</div>
+
+<script>
+  // Toggle Logic
+  const modeRadios = document.querySelectorAll('input[name="mode"]');
+  const blocks = document.querySelectorAll('.mode-block');
+
+  modeRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      blocks.forEach(block => {
+        block.style.display = (block.dataset.mode === radio.value) ? 'block' : 'none';
+      });
+    });
+  });
+
+  // Panel Logic
+  function openPanel() {
+    document.getElementById('panel').classList.add('active');
+    document.getElementById('overlay').classList.add('active');
+  }
+  function closePanel() {
+    document.getElementById('panel').classList.remove('active');
+    document.getElementById('overlay').classList.remove('active');
+  }
+</script>
+
+{% endblock %}

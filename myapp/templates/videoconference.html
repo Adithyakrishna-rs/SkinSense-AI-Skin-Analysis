@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinSense | Secure Consultation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. Reset and Background */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #fdf8f5;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* 2. Full-Screen Container with Brand Background */
+        #root {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                        url("{% static 'user/img/bg1.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 3. Pre-loading State Styling */
+        #root:empty::before {
+            content: "Initializing Secure Consultation...";
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #c48b46;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* 4. Branding Overlay */
+        .consultation-header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .consultation-header h1 {
+            margin: 0;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: #333;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+        }
+
+        .consultation-header span {
+            color: #d4a373;
+        }
+
+        /* Custom Scrollbar for Zego Chat */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #c48b46; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="consultation-header">
+        <h1>SKIN<span>SENSE</span></h1>
+    </div>
+
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+
+    <script>
+        window.onload = async function () {
+            const appointmentId = "{{ a.id }}";
+
+            function getUrlParams(url) {
+                let urlStr = url.split('?')[1];
+                const urlSearchParams = new URLSearchParams(urlStr);
+                return Object.fromEntries(urlSearchParams.entries());
+            }
+
+            function getCSRFToken() {
+                let cookieValue = null;
+                const name = 'csrftoken';
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            const roomID = getUrlParams(window.location.href)['roomID'] || ("appointment_" + appointmentId);
+            const userID = Math.floor(Math.random() * 10000) + "";
+            const userName = "Consultant_" + userID;
+
+            const appID = 913746545;
+            const serverSecret = "f14a2e54928d086e3d98d818bbda4eaa"
+
+            const currentUrl =
+                window.location.protocol + '//' +
+                window.location.host +
+                window.location.pathname +
+                '?roomID=' + roomID;
+
+            // Save URL to the database
+            try {
+                await fetch(`/save-appointment-url/${appointmentId}/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCSRFToken()
+                    },
+                    body: JSON.stringify({ url: currentUrl })
+                });
+            } catch (error) {
+                console.error("Error saving URL:", error);
+            }
+
+            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+                appID,
+                serverSecret,
+                roomID,
+                userID,
+                userName
+            );
+
+            const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+            zp.joinRoom({
+                container: document.querySelector("#root"),
+                sharedLinks: [{
+                    name: 'Invite Patient',
+                    url: currentUrl,
+                }],
+                scenario: {
+                    mode: ZegoUIKitPrebuilt.VideoConference,
+                },
+                turnOnMicrophoneWhenJoining: true,
+                turnOnCameraWhenJoining: true,
+                showMyCameraToggleButton: true,
+                showMyMicrophoneToggleButton: true,
+                showAudioVideoSettingsButton: true,
+                showScreenSharingButton: true,
+                showTextChat: true,
+                showUserList: true,
+                maxUsers: 2,
+                layout: "Auto",
+                showLayoutButton: false, // Cleaner UI for 1-on-1 calls
+            });
+        };
+    </script>
+</body>
+</html>

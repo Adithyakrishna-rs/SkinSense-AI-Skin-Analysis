@@ -1,0 +1,365 @@
+{% extends 'userheader.html' %}
+{% block content %}
+
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-cream: #fdfbf9;
+            --skin-dark: #333333;
+        }
+
+        body { font-family: 'Poppins', sans-serif; background-color: var(--skin-cream); color: var(--skin-dark); }
+        .brand-font { font-family: 'Playfair Display', serif; }
+
+        /* --- NAVIGATION SYNC --- */
+        .navbar-brand h1 {
+            font-family: 'Playfair Display', serif !important;
+            letter-spacing: 4px !important;
+        }
+
+        .nav-item.nav-link {
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            color: var(--skin-dark) !important;
+        }
+        .nav-item.nav-link:hover, .nav-item.nav-link.active { color: var(--skin-gold) !important; }
+
+        /* --- PROFILE CARD STYLING --- */
+        .update-card {
+            background: #ffffff;
+            padding: 50px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f2e9e1;
+            border-radius: 4px;
+            margin-top: 50px;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            color: var(--skin-gold);
+            letter-spacing: 3px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Form Overrides */
+        .update-card p label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--skin-dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .update-card input, .update-card select, .update-card textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #eee;
+            background-color: #fafafa;
+            border-radius: 0;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .update-card input:focus {
+            outline: none;
+            border-color: var(--skin-gold);
+            background-color: #fff;
+        }
+
+        .btn-update {
+            background-color: var(--skin-dark);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 0;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .btn-update:hover {
+            background-color: var(--skin-gold);
+            color: white;
+        }
+        .js-feedback {
+            font-size: 0.8rem;
+            color: red;
+            margin-top: 5px;
+        }
+
+        input:invalid {
+            border-color: red;
+        }
+
+        input:valid {
+            border-color: green;
+        }
+    </style>
+</head>
+
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="update-card shadow-sm">
+                    <div class="text-center mb-5">
+                        <p class="section-title">Personal Settings</p>
+                        <h1 class="brand-font display-6 mb-0">Update Profile</h1>
+                        <div class="mx-auto mt-3" style="width: 50px; height: 2px; background-color: var(--skin-gold);"></div>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <h6 class="brand-font mb-4" style="color: var(--skin-gold); border-bottom: 1px solid #f2e9e1; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">General Information</h6>
+                            {{ pro.as_p }}
+                            <small class="js-feedback"></small>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="brand-font mb-4" style="color: var(--skin-gold); border-bottom: 1px solid #f2e9e1; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">Security Details</h6>
+                            <small class="js-feedback"></small>
+                            {{ log.as_p }}
+                        </div>
+
+                        <div class="text-center pt-3">
+                            <button type="submit" class="btn-update">Save Changes</button>
+                            <a href="/profileuser" class="btn btn-link mt-3 text-decoration-none small text-muted d-block">Discard Changes</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    if (!form) return;
+
+    let submitted = false;
+    const touched = new Set(); // tracks fields the user interacted with
+
+    // Enable or disable the submit button based on validation
+    const submitButton = form.querySelector("button[type='submit']");
+
+    // Helper function to enable/disable the submit button
+    function toggleSubmitButton() {
+        const isFormValid = validateAll(true);
+        submitButton.disabled = !isFormValid; // Disable submit button if invalid
+    }
+
+    function getAllFields() {
+        return Array.from(form.querySelectorAll("input, select, textarea"))
+            .filter(el => el.name && el.type !== "hidden" && el.type !== "submit" && el.type !== "button");
+    }
+
+    // Ensure feedback element is available for each field
+    function ensureFeedbackEl(input) {
+        let fb = input.parentElement.querySelector(".js-feedback");
+        if (!fb) {
+            fb = document.createElement("small");
+            fb.className = "js-feedback";
+            fb.style.display = "block";
+            fb.style.marginTop = "4px";
+            input.parentElement.appendChild(fb);
+        }
+        return fb;
+    }
+
+    // Clear feedback
+    function clearFeedback(input) {
+        const fb = input.parentElement.querySelector(".js-feedback");
+        if (fb) fb.textContent = "";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Set invalid feedback
+    function setInvalid(input, msg) {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = "❌ " + msg;
+        fb.style.color = "red";
+        input.style.borderColor = "red";
+    }
+
+    // Set valid feedback
+    function setValid(input, msg = "") {
+        const fb = ensureFeedbackEl(input);
+        fb.textContent = msg ? ("✅ " + msg) : "";
+        fb.style.color = "green";
+        input.style.borderColor = "#d9d9d9";
+    }
+
+    // Validation rules for specific fields
+    const rules = {
+        name: {
+            required: true,
+            pattern: /^[A-Za-z ]+$/,
+            invalidMsg: "Name must contain only letters and spaces",
+            validMsg: "Valid name"
+        },
+        age: {
+            required: true,
+            pattern: /^[1-9][0-9]*$/, 
+            invalidMsg: "Age must be a valid number",
+            validMsg: "Valid age"
+        },
+        
+        contact: {
+            required: true,
+            pattern: /^\d{10}$/,
+            invalidMsg: "Enter a valid 10-digit phone number",
+            validMsg: "Valid phone number"
+        },
+        email: {
+            required: true,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            invalidMsg: "Enter a valid email address",
+            validMsg: "Valid email"
+        }
+    };
+
+    // Check if a value is empty
+    function isEmptyValue(el) {
+        return (el.value || "").trim() === "";
+    }
+
+    // Validate a single field
+    function validateField(el, showMsg) {
+        const name = el.name;
+        let ok = true;
+
+        // Handle specific validations for name, contact, email, password
+        if (rules[name]) {
+            if (el.type === "radio" || el.type === "file" || el.tagName.toLowerCase() === "select") {
+                return true;
+            }
+
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (rules[name].pattern && !rules[name].pattern.test(el.value.trim())) {
+                ok = false;
+                if (showMsg) setInvalid(el, rules[name].invalidMsg);
+                else clearFeedback(el);
+                return false;
+            }
+
+            if (showMsg) setValid(el, rules[name].validMsg);
+            else clearFeedback(el);
+        } else {
+            // For other fields, just check for required
+            if (isEmptyValue(el)) {
+                ok = false;
+                if (showMsg) setInvalid(el, "This field is required");
+                else clearFeedback(el);
+            } else {
+                clearFeedback(el);
+            }
+        }
+
+        return ok;
+    }
+
+    // Validate radio buttons for gender
+    function validateRadioGroups(showMsg) {
+        const radios = Array.from(form.querySelectorAll('input[type="radio"][name]'));
+        const names = [...new Set(radios.map(r => r.name))];
+        let ok = true;
+
+        names.forEach(groupName => {
+            const checked = form.querySelector(`input[type="radio"][name="${groupName}"]:checked`);
+            const first = form.querySelector(`input[type="radio"][name="${groupName}"]`);
+            if (!first) return;
+
+            if (!checked) {
+                ok = false;
+                if (showMsg) setInvalid(first, "Please select an option");
+                else clearFeedback(first);
+            } else {
+                if (showMsg) setValid(first);
+                else clearFeedback(first);
+            }
+        });
+
+        return ok;
+    }
+
+    // Validate all fields
+    function validateAll(showMsg) {
+        let ok = true;
+
+        // Validate specific fields (name, contact, email, password)
+        const fields = getAllFields().filter(el => el.type !== "radio");
+        fields.forEach(el => {
+            const shouldShow = showMsg && (submitted || touched.has(el.name));
+            if (!validateField(el, shouldShow)) ok = false;
+        });
+
+        // Validate radio groups (gender)
+        if (!validateRadioGroups(showMsg)) ok = false;
+
+        return ok;
+    }
+
+    // Handle form submission
+    form.addEventListener("submit", (e) => {
+        submitted = true;
+        const ok = validateAll(true);
+        if (!ok) {
+            e.preventDefault();
+            alert("❌ Please fill all required fields correctly.");
+        }
+    });
+
+    // Real-time validation on input or blur
+    getAllFields().forEach(el => {
+        const evt = (el.type === "file" || el.tagName.toLowerCase() === "select") ? "change" : "input";
+
+        el.addEventListener(evt, () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+
+        el.addEventListener("blur", () => {
+            touched.add(el.name);
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Real-time validation for radio buttons
+    form.querySelectorAll('input[type="radio"]').forEach(r => {
+        r.addEventListener("change", () => {
+            touched.add("radio");
+            toggleSubmitButton(); // Check if submit button can be enabled
+        });
+    });
+
+    // Initially disable the submit button until the form is valid
+    toggleSubmitButton();
+});
+</script>
+
+</body>
+
+</html>
+
+{% endblock %}

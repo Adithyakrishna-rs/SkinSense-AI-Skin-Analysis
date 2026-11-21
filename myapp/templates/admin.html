@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Master Admin | SkinSense Dermatology</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    
+    <script src="{% static 'admin/assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700", "Playfair Display:400,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["{% static 'admin/assets/css/fonts.min.css' %}"],
+        },
+        active: function () { sessionStorage.fonts = true; },
+      });
+    </script>
+
+    <link rel="stylesheet" href="{% static 'admin/assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/assets/css/kaiadmin.min.css' %}" />
+
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-dark: #1a2035;
+        }
+        .logo-header .logo h1 { color: #ffffff; font-family: 'Playfair Display', serif; letter-spacing: 2px; font-size: 1.3rem; margin: 0; text-transform: uppercase; }
+        .sidebar .nav > .nav-item.active > a { background: var(--skin-gold) !important; }
+        .card-round { border-radius: 10px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .numbers .card-category { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: #8d94ad; }
+        .btn-gold { background-color: var(--skin-gold) !important; color: white !important; border-radius: 5px; padding: 5px 15px; font-size: 12px; border: none; }
+        .progress-sm { height: 6px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar" data-background-color="dark">
+            <div class="sidebar-logo">
+                <div class="logo-header" data-background-color="dark">
+                    <a href="/adminhome/" class="logo"><h1>SKIN<span style="color: var(--skin-gold);">SENSE</span></h1></a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item active">
+                            <a href="/adminhome/"><i class="fas fa-chart-line"></i><p>Dashboard Overview</p></a>
+                        </li>
+                        <li class="nav-section"><h4 class="text-section">Management</h4></li>
+                        <li class="nav-item"><a href="/doctorlist/"><i class="fas fa-user-md"></i><p>Doctor Registry</p></a></li>
+                        <li class="nav-item"><a href="/datatables/"><i class="fas fa-procedures"></i><p>Patient Database</p></a></li>
+                        <li class="nav-item"><a href="/admincomplaint/"><i class="fas fa-exclamation-circle"></i><p>Grievances</p></a></li>
+                        <li class="nav-item"><a href="/adminfeedback/"><i class="fas fa-star"></i><p>Patient Feedbacks</p></a></li>
+                        <li class="nav-item mt-5"><a href="/login2" class="bg-danger text-white"><i class="fas fa-power-off"></i><p>Logout System</p></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                <div class="container-fluid">
+                    <h4 class="m-0 text-dark fw-bold">Executive Control Center</h4>
+                </div>
+            </nav>
+
+            <div class="container">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5"><div class="icon-big text-center text-primary"><i class="fas fa-user-md"></i></div></div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Specialists</p>
+                                                <h4 class="card-title">{{ doc_count|default:"0" }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5"><div class="icon-big text-center text-success"><i class="fas fa-users"></i></div></div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Total Patients</p>
+                                                <h4 class="card-title">{{ patient_count|default:"0" }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5"><div class="icon-big text-center text-info"><i class="fas fa-calendar-check"></i></div></div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Active Bookings</p>
+                                                <h4 class="card-title">{{ pending_appointments|default:"12" }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5"><div class="icon-big text-center text-secondary"><i class="fas fa-award"></i></div></div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Growth Rate</p>
+                                                <h4 class="card-title">+15%</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card card-round">
+                                <div class="card-header">
+                                    <div class="card-title">Service Demand</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-muted">Cosmetology</span>
+                                            <span class="text-muted fw-bold">70%</span>
+                                        </div>
+                                        <div class="progress progress-sm">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-muted">Dermatology</span>
+                                            <span class="text-muted fw-bold">45%</span>
+                                        </div>
+                                        <div class="progress progress-sm">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-0">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-muted">Laser Therapy</span>
+                                            <span class="text-muted fw-bold">30%</span>
+                                        </div>
+                                        <div class="progress progress-sm">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card card-round">
+                                <div class="card-header"><div class="card-title">Critical Grievances</div></div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Patient</th>
+                                                    <th>Issue</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for c in complaints_list|slice:":3" %}
+                                                <tr>
+                                                    <td>{{ c.login_id.patient.name }}</td>
+                                                    <td><span class="text-truncate d-inline-block" style="max-width: 300px;">{{ c.complaint }}</span></td>
+                                                    <td><a href="/admincomplaint/" class="btn-gold">Resolve</a></td>
+                                                </tr>
+                                                {% empty %}
+                                                <tr><td colspan="3" class="text-center p-3">No active grievances</td></tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-round">
+                                <div class="card-header"><div class="card-title">Recent Patient Feedback</div></div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        {% for f in feedback_list|slice:":3" %}
+                                        <div class="col-md-4">
+                                            <div class="border rounded p-3 mb-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <h6 class="fw-bold m-0">{{ f.login_id.patient.name }}</h6>
+                                                    <div class="text-warning small"><i class="fa fa-star"></i> 5.0</div>
+                                                </div>
+                                                <p class="text-muted small mb-0 italic">"{{ f.feedback|truncatechars:100 }}"</p>
+                                            </div>
+                                        </div>
+                                        {% empty %}
+                                        <div class="col-12 text-center py-3 text-muted">No feedback yet</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <a href="/adminfeedback/" class="btn btn-link text-gold">View All Reviews</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'admin/assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/kaiadmin.min.js' %}"></script>
+</body>
+</html>

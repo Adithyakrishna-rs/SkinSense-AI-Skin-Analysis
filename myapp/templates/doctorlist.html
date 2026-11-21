@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Doctor Directory | SkinSense Admin</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="{% static 'admin/assets/img/kaiadmin/favicon.ico' %}" type="image/x-icon" />
+
+    <script src="{% static 'admin/assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700", "Playfair Display:400,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["{% static 'admin/assets/css/fonts.min.css' %}"],
+        },
+        active: function () { sessionStorage.fonts = true; },
+      });
+    </script>
+
+    <link rel="stylesheet" href="{% static 'admin/assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/assets/css/kaiadmin.min.css' %}" />
+
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-dark: #1a2035;
+            --skin-cream: #fdfbf9;
+        }
+
+        .logo-header .logo h1 { color: #ffffff; font-family: 'Playfair Display', serif; letter-spacing: 2px; font-size: 1.2rem; margin: 0; text-transform: uppercase; }
+        .sidebar .nav > .nav-item.active > a { background: var(--skin-gold) !important; }
+        
+        /* Premium Table Styles */
+        .card-header { background-color: var(--skin-dark); border-bottom: 3px solid var(--skin-gold); padding: 20px !important; }
+        .card-title { color: white !important; font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+        .thead-gold th { background-color: #f8f9fa !important; color: var(--skin-gold) !important; font-weight: 700 !important; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; border: none !important; }
+        .btn-gold { background-color: var(--skin-gold) !important; border-color: var(--skin-gold) !important; color: white !important; border-radius: 0; font-weight: 600; }
+        .badge-spec { background: rgba(196, 139, 70, 0.1); color: var(--skin-gold); border: 1px solid var(--skin-gold); padding: 5px 10px; font-weight: 600; }
+    </style>
+</head>
+    <style>
+        :root {
+            --skin-gold: #c48b46;
+            --skin-dark: #1a2035;
+        }
+        .logo-header .logo h1 { color: #ffffff; font-family: 'Playfair Display', serif; letter-spacing: 2px; font-size: 1.3rem; margin: 0; text-transform: uppercase; }
+        .sidebar .nav > .nav-item.active > a { background: var(--skin-gold) !important; }
+        .card-round { border-radius: 10px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .numbers .card-category { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: #8d94ad; }
+        .btn-gold { background-color: var(--skin-gold) !important; color: white !important; border-radius: 5px; padding: 5px 15px; font-size: 12px; border: none; }
+        .progress-sm { height: 6px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar" data-background-color="dark">
+            <div class="sidebar-logo">
+                <div class="logo-header" data-background-color="dark">
+                    <a href="/adminhome/" class="logo"><h1>SKIN<span style="color: var(--skin-gold);">SENSE</span></h1></a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item active">
+                            <a href="/adminhome/"><i class="fas fa-chart-line"></i><p>Dashboard Overview</p></a>
+                        </li>
+                        <li class="nav-section"><h4 class="text-section">Management</h4></li>
+                        <li class="nav-item"><a href="/doctorlist/"><i class="fas fa-user-md"></i><p>Doctor Registry</p></a></li>
+                        <li class="nav-item"><a href="/datatables/"><i class="fas fa-procedures"></i><p>Patient Database</p></a></li>
+                        <li class="nav-item"><a href="/admincomplaint/"><i class="fas fa-exclamation-circle"></i><p>Grievances</p></a></li>
+                        <li class="nav-item"><a href="/adminfeedback/"><i class="fas fa-star"></i><p>Patient Feedbacks</p></a></li>
+                        <li class="nav-item mt-5"><a href="/login2" class="bg-danger text-white"><i class="fas fa-power-off"></i><p>Logout System</p></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main-panel">
+            <div class="main-header">
+                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                    <div class="container-fluid">
+                        <div class="navbar-left p-0 d-none d-lg-flex">
+                            <h4 class="m-0 text-dark fw-bold">Specialist Management</h4>
+                        </div>
+                        <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                            <li class="nav-item topbar-user dropdown hidden-caret">
+                                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#">
+                                    <div class="avatar-sm">
+                                        <img src="{% static 'admin/assets/img/profile.jpg' %}" alt="admin" class="avatar-img rounded-circle" />
+                                    </div>
+                                    <span class="profile-username">
+                                        <span class="op-7">Admin</span>
+                                        <span class="fw-bold">Master Control</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="container">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-round">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h4 class="card-title">Professional Specialist Registry</h4>
+                                    <button class="btn btn-gold btn-round btn-sm"><a href="/docreg/">
+                                         Add New Specialist</a>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="basic-datatables" class="display table table-hover">
+                                            <thead class="thead-gold">
+                                                <tr>
+                                                    <th>Specialist Name</th>
+                                                    <th>Age/Sex</th>
+                                                    <th>Credentials</th>
+                                                    <th>Specialization</th>
+                                                    <th>Affiliated Hospital</th>
+                                                    <th>Experience</th>
+                                                    <th colspan="2" class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for a in doc %}
+                                                <tr>
+                                                    <td class="fw-bold text-dark">{{a.name}}</td>
+                                                    <td>{{a.age}} / {{a.gender}}</td>
+                                                    <td><small class="fw-bold">{{a.qualification}}</small></td>
+                                                    <td><span>{{a.specialization}}</span></td>
+                                                    <td>{{a.hospital|title}}</td>
+                                                    <td>{{a.experience}} Years</td>
+                                                     
+                                                  <td class="text-center">
+                                                    {% if a.loginid.status == 0 %}
+                                                        <a href="{% url 'doctorapprove' a.loginid.id %}" class="btn btn-sm btn-success">Approve</a>
+                                                        <a href="{% url 'doctorreject' a.loginid.id %}" class="btn btn-sm btn-danger">Reject</a>
+                                                    {% elif a.loginid.status == 1 %}
+                                                        <span class="badge bg-success text-uppercase">Approved</span>
+                                                    {% elif a.loginid.status == 2 %}
+                                                        <span class="badge bg-danger text-uppercase">Rejected</span>
+                                                    {% else %}
+                                                        <span class="text-muted small">Unknown</span>
+                                                    {% endif %}
+                                                </td>
+                                                    
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="container-fluid d-flex justify-content-center">
+                    <div class="copyright">2026, &copy; SkinSense Dermatology Executive Portal</div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="{% static 'admin/assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/plugin/datatables/datatables.min.js' %}"></script>
+    <script src="{% static 'admin/assets/js/kaiadmin.min.js' %}"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({
+            "pageLength": 10,
+            "language": {
+                "search": "Quick Search:",
+                "paginate": {
+                    "next": '<i class="fa fa-angle-right"></i>',
+                    "previous": '<i class="fa fa-angle-left"></i>'
+                }
+            }
+        });
+      });
+    </script>
+</body>
+</html>
